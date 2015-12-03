@@ -13,6 +13,20 @@
     <script src="js/OBJLoader.js"></script>
     <script src="js/stats.min.js"></script>
     <script>
+
+      // var json = JSON.parse(materials);
+      // console.log(json);
+
+      $.getJSON("js/shirt.json", function(json) {
+        console.log(json);
+        $.each(function (i) {
+          json.materials[i].color = 16711680;
+          console.log(i);
+        });
+        //json.materials.color = 16711680;
+        console.log(json.materials[0].color);
+      });
+
       var mouseX = 0, mouseY = 0;
       var windowHalfX = window.innerWidth / 2;
       var windowHalfY = window.innerHeight / 2;
@@ -43,6 +57,8 @@
       scene.add(directionalLight);
       var loader = new THREE.ObjectLoader();
       loader.load('js/shirt.json', function (object) {
+        //console.log(object);
+        //object.materials.color = 16711680;
         var model = new THREE.Object3D();
         model.add(object);
         model.scale.set(scale,scale,scale);
