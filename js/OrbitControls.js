@@ -61,19 +61,27 @@
 		// API
 
 		this.getPolarAngle = function () {
+
 			return phi;
+
 		};
 
 		this.getAzimuthalAngle = function () {
+
 			return theta;
+
 		};
 
 		this.rotateLeft = function ( angle ) {
+
 			thetaDelta -= angle;
+
 		};
 
 		this.rotateUp = function ( angle ) {
-			//phiDelta -= angle;
+
+			phiDelta -= angle;
+
 		};
 
 		// pass in distance in world space to move left
@@ -350,7 +358,7 @@
 		this.autoRotateSpeed = 2.0; // 30 seconds per round when fps is 60
 
 		// Set to false to disable use of the keys
-		this.enableKeys = false;
+		this.enableKeys = true;
 
 		// The four arrow keys
 		this.keys = { LEFT: 37, UP: 38, RIGHT: 39, BOTTOM: 40 };

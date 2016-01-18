@@ -14,16 +14,11 @@
     <script src="js/stats.min.js"></script>
     <script>
 
-      // var json = JSON.parse(materials);
-      // console.log(json);
-
       $.getJSON("js/shirt.json", function(json) {
-        console.log(json);
-        $.each(function (i) {
-          json.materials[i].color = 16711680;
-          console.log(i);
-        });
-        //json.materials.color = 16711680;
+        console.log(json.materials);
+        for(i = 0; i <= 38; i++) {
+          json.materials[i].color = 11316396;
+        }
         console.log(json.materials[0].color);
       });
 
@@ -37,7 +32,7 @@
 
       var renderer = new THREE.WebGLRenderer();
       //renderer.setClearColor( 0xffffff, 1);
-      renderer.setSize(window.innerWidth - 20, window.innerHeight - 20);
+      renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
 
       var controls = new THREE.OrbitControls(camera, renderer.domElement);
