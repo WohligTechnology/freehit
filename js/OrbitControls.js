@@ -358,13 +358,13 @@
 		this.autoRotateSpeed = 2.0; // 30 seconds per round when fps is 60
 
 		// Set to false to disable use of the keys
-		this.enableKeys = true;
+		this.enableKeys = false;
 
 		// The four arrow keys
 		this.keys = { LEFT: 37, UP: 38, RIGHT: 39, BOTTOM: 40 };
 
 		// Mouse buttons
-		this.mouseButtons = { ORBIT: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, PAN: THREE.MOUSE.RIGHT };
+		this.mouseButtons = { ORBIT: THREE.MOUSE.LEFT };
 
 		////////////
 		// internals

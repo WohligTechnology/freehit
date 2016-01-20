@@ -30,9 +30,14 @@
       height = window.innerHeight;
 
       // Creating renderer
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true
+      });
       renderer.setSize(width, height);
       document.body.appendChild(renderer.domElement);
+      renderer.setClearColor(0xffffff, 1);
+      renderer.recieveShadow = true;
 
       // Creating camera
       camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
@@ -51,10 +56,23 @@
         camera.updateProjectionMatrix();
       });
 
-      // Adding light
-      renderer.setClearColor(0xffffff, 1);
-      light = new THREE.AmbientLight(0xffffff);
-      scene.add(light);
+      // Adding Ambient light
+      amblight = new THREE.AmbientLight(0xffffff);
+      scene.add(amblight);
+
+      // Adding Directional light
+      dirlight = new THREE.DirectionalLight(0xffffff, 0.5);
+      dirlight.shadowCameraNear = 1;
+      dirlight.shadowCameraFar = 150;
+      dirlight.castshadow = true;
+      //dirlight.castShadow = true;
+      //dirlight.shadowDarkness = 0.5;
+      //scene.add(dirlight);
+
+      var spotLight = new THREE.SpotLight(0xffffff);
+      spotLight.position.set(1000, 1000, 1000);
+      spotLight.castShadow = true;
+      camera.add(spotLight);
 
       // Loading json
       // loader = new THREE.JSONLoader();
@@ -75,11 +93,27 @@
 
       // Native Sphere
       var geometry = new THREE.SphereGeometry(1, 50, 50);
-      var texture = THREE.ImageUtils.loadTexture('texture.jpg');
-      var material = new THREE.MeshBasicMaterial({ map: texture });
-      var sphere = new THREE.Mesh(geometry, material);
-      sphere.rotation.x = -0.5;
-      scene.add(sphere);
+      //var texture = THREE.ImageUtils.loadTexture('texture.jpg');
+      var texture2 = new THREE.TextureLoader();
+      texture2.load(
+        'ball_texture.jpg',
+        function(texture) {
+          var material = new THREE.MeshPhongMaterial({
+            map: texture
+          });
+          var sphere = new THREE.Mesh(geometry, material);
+          sphere.castShadow = true;
+          sphere.rotation.y = -5.5;
+          sphere.rotation.z = -1;
+          scene.add(sphere);
+        },
+        function(xhr) {
+          console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        },
+        function(xhr) {
+          console.log('An error happened');
+        }
+      );
     }
 
     function animate() {
@@ -89,11 +123,11 @@
     }
 
     $.getJSON("js/shirt.json", function(json) {
-      console.log(json.materials);
+      //console.log(json.materials);
       for (i = 0; i <= 38; i++) {
         json.materials[i].color = 11316396;
       }
-      console.log(json.materials[0].color);
+      //console.log(json.materials[0].color);
     });
 
     var onKeyDown = function(event) {
