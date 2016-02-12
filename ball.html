@@ -5,13 +5,14 @@
   <meta charset="utf-8">
   <title>Ball</title>
   <link rel="stylesheet" href="css/main.css" media="screen" title="no title" charset="utf-8">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js" charset="utf-8"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js" charset="utf-8"></script> -->
+  <script src="js/jquery.min.js" charset="utf-8"></script>
 </head>
 
 <body>
   <script src="js/three.js" charset="utf-8"></script>
   <script src="js/OrbitControls.js" charset="utf-8"></script>
-  <script src="js/OBJLoader.js"></script>
+  <script src="js/OBJLoader.js" charset="utf-8"></script>
   <script type="text/javascript">
     // Creating variables at one place
     var scene, camera, renderer,
@@ -74,7 +75,7 @@
       spotLight.castShadow = true;
       camera.add(spotLight);
 
-      // Loading json
+      //Loading json
       // loader = new THREE.JSONLoader();
       // loader.load('js/ball.js', function(geometry) {
       //   var texture = THREE.ImageUtils.loadTexture("texture.jpg");
@@ -93,10 +94,9 @@
 
       // Native Sphere
       var geometry = new THREE.SphereGeometry(1, 50, 50);
-      //var texture = THREE.ImageUtils.loadTexture('texture.jpg');
       var texture2 = new THREE.TextureLoader();
       texture2.load(
-        'ball_texture.jpg',
+        'img/ball_texture3.jpg',
         function(texture) {
           var material = new THREE.MeshPhongMaterial({
             map: texture
@@ -114,6 +114,31 @@
           console.log('An error happened');
         }
       );
+
+      //var texture = THREE.ImageUtils.loadTexture('texture.jpg');
+      // loader = new THREE.JSONLoader();
+      // loader.load('js/ball.json', function(geometry) {
+      //   var texture2 = new THREE.TextureLoader();
+      //   texture2.load(
+      //     'ball_texture.jpg',
+      //     function(texture) {
+      //       var material = new THREE.MeshPhongMaterial({
+      //         map: texture
+      //       });
+      //       var sphere = new THREE.Mesh(geometry, material);
+      //       sphere.castShadow = true;
+      //       sphere.rotation.y = -5.5;
+      //       sphere.rotation.z = -1;
+      //       scene.add(sphere);
+      //     },
+      //     function(xhr) {
+      //       console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+      //     },
+      //     function(xhr) {
+      //       console.log('An error happened');
+      //     }
+      //   );
+      // });
     }
 
     function animate() {

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Bat</title>
+  <link rel="stylesheet" href="css/main.css" media="screen" title="no title" charset="utf-8">
+  <script src="js/jquery.min.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <script src="js/three.js" charset="utf-8"></script>
+  <script src="js/OrbitControls.js" charset="utf-8"></script>
+  <script src="js/OBJLoader.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    // Creating variables at one place
+    var scene, camera, renderer,
+      width, height, light,
+      loader, material, mesh;
+
+    // methods to call
+    init();
+    animate();
+
+    // defining methods
+    function init() {
+      // Creating scene
+      scene = new THREE.Scene();
+      width = window.innerWidth;
+      height = window.innerHeight;
+
+      // Creating renderer
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(width, height);
+      document.body.appendChild(renderer.domElement);
+      renderer.setClearColor(0xffffff, 1);
+      renderer.recieveShadow = true;
+
+      // Creating camera
+      camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 10000);
+      camera.position.set(0, 0, 0);
+      scene.add(camera);
+
+      // Adding Controls
+      var controls = new THREE.OrbitControls(camera, renderer.domElement);
+      // controls.enableRotate = false;
+      controls.enableZoom = false;
+
+      // Updating viewport
+      window.addEventListener('resize', function() {
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      });
+
+      // Adding Ambient light
+      amblight = new THREE.AmbientLight(0xffffff);
+      scene.add(amblight);
+
+      // Adding Directional light
+      dirlight = new THREE.DirectionalLight(0xffffff, 0.5);
+      dirlight.shadowCameraNear = 1;
+      dirlight.shadowCameraFar = 150;
+      dirlight.castshadow = true;
+
+      var spotLight = new THREE.SpotLight(0xffffff);
+      spotLight.position.set(1000, 1000, 1000);
+      spotLight.castShadow = true;
+      camera.add(spotLight);
+
+      //Loading json
+      loader = new THREE.JSONLoader();
+      loader.load('js/bat.json', function(geometry) {
+        var texture = THREE.ImageUtils.loadTexture("img/bat_texture.jpg");
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        material = new THREE.MeshBasicMaterial({ map: texture });
+        mesh = new THREE.Mesh(geometry, material);
+        var model = new THREE.Object3D();
+        model.add(mesh);
+        // model.scale.set(5, 5, 5);
+        // model.position.set(-10, -20, 0);
+        scene.add(model);
+      });
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      //mesh.rotation.z += 0.01;
+      renderer.render(scene, camera);
+    }
+
+  </script>
+</body>
+
+</html>
