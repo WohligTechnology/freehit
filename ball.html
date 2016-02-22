@@ -13,6 +13,9 @@
   <script src="js/three.js" charset="utf-8"></script>
   <script src="js/OrbitControls.js" charset="utf-8"></script>
   <script src="js/OBJLoader.js" charset="utf-8"></script>
+  <script src="js/TextGeometry.js" charset="utf-8"></script>
+  <script src="js/TransformControls.js" charset="utf-8"></script>
+  <script src="bower_components/threex.dynamictexture/threex.dynamictexture.js"></script>
   <script type="text/javascript">
     // Creating variables at one place
     var scene, camera, renderer,
@@ -92,53 +95,77 @@
       //   scene.add(model);
       // });
 
-      // Native Sphere
-      var geometry = new THREE.SphereGeometry(1, 50, 50);
-      var texture2 = new THREE.TextureLoader();
-      texture2.load(
-        'img/ball_texture3.jpg',
-        function(texture) {
-          var material = new THREE.MeshPhongMaterial({
-            map: texture
-          });
-          var sphere = new THREE.Mesh(geometry, material);
-          sphere.castShadow = true;
-          sphere.rotation.y = -5.5;
-          sphere.rotation.z = -1;
-          scene.add(sphere);
-        },
-        function(xhr) {
-          console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-        },
-        function(xhr) {
-          console.log('An error happened');
-        }
-      );
+      // DYANMIMC TEXT
+      var dynamicTexture  = new THREEx.DynamicTexture(512,512);
+      dynamicTexture.texture.needsUpdate = true;
 
-      //var texture = THREE.ImageUtils.loadTexture('texture.jpg');
-      // loader = new THREE.JSONLoader();
-      // loader.load('js/ball.json', function(geometry) {
-      //   var texture2 = new THREE.TextureLoader();
-      //   texture2.load(
-      //     'ball_texture.jpg',
-      //     function(texture) {
-      //       var material = new THREE.MeshPhongMaterial({
-      //         map: texture
-      //       });
-      //       var sphere = new THREE.Mesh(geometry, material);
-      //       sphere.castShadow = true;
-      //       sphere.rotation.y = -5.5;
-      //       sphere.rotation.z = -1;
-      //       scene.add(sphere);
-      //     },
-      //     function(xhr) {
-      //       console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-      //     },
-      //     function(xhr) {
-      //       console.log('An error happened');
-      //     }
-      //   );
-      // });
+
+
+      // var url		= 'img/ball_texture3.jpg';
+    	// var image	= document.createElement('img');
+    	// image.src	= url;
+    	// image.addEventListener('load', function() {
+    	// 	dynamicTexture.drawImage(image, 0, 0);
+      //   //var textureLoader = new THREE.TextureLoader();
+      //   dynamicTexture.drawText('HarsH', 0, 256, 'black');
+    	// });
+
+      // Native Sphere
+      // var geometry = new THREE.SphereGeometry(1, 50, 50);
+      // // var geometry = new THREE.CubeGeometry( 10, 10, 10);
+      // var texture2 = new THREE.TextureLoader();
+      // var url = 'img/ball_texture3.jpg';
+      // texture2.load(
+      //   url,
+      //   function(texture) {
+      //   	var image	= document.createElement('img');
+      //   	image.src	= url;
+      //   	image.addEventListener('load', function() {
+      //   		//dynamicTexture.drawImage(image, 0, 0);
+      //       dynamicTexture.drawText('HarsH', 0, 256, 'black');
+      //   	});
+      //
+      //     var mapp = dynamicTexture.texture;
+      //     var material1 = new THREE.MeshPhongMaterial({ map: texture });
+      //     var material2 = new THREE.MeshPhongMaterial({ map: texture });
+      //     //
+      //     var materials = [material2,material1];
+      //     var meshFaceMaterial = new THREE.MeshFaceMaterial(materials);
+      //     var sphere = new THREE.Mesh(geometry, meshFaceMaterial);
+      //     sphere.castShadow = true;
+      //     sphere.rotation.y = -5.5;
+      //     sphere.rotation.z = -1;
+      //     scene.add(sphere);
+      //   },
+      //   function(xhr) {
+      //     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+      //   },
+      //   function(xhr) {
+      //     console.log('An error happened');
+      //   }
+      // );
+
+      //var texture = THREE.ImageUtils.loadTexture('ball_texture3.jpg');
+      loader = new THREE.JSONLoader();
+      loader.load('js/ball.json', function(geometry) {
+        var texture2 = new THREE.TextureLoader();
+        texture2.load(
+          'img/ball_texture3.jpg',
+          function(texture) {
+            var material = new THREE.MeshPhongMaterial({ map: texture });
+            var sphere = new THREE.Mesh(geometry, material);
+            sphere.castShadow = true;
+            sphere.rotation = false;
+            scene.add(sphere);
+          },
+          function(xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+          },
+          function(xhr) {
+            console.log('An error happened');
+          }
+        );
+      });
     }
 
     function animate() {
@@ -150,7 +177,7 @@
     $.getJSON("js/shirt.json", function(json) {
       //console.log(json.materials);
       for (i = 0; i <= 38; i++) {
-        json.materials[i].color = 11316396;
+        //json.materials[i].color = 11316396;
       }
       //console.log(json.materials[0].color);
     });
