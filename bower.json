@@ -1,0 +1,23 @@
+{
+  "name": "freehit",
+  "homepage": "https://github.com/WohligTechnology/freehit",
+  "authors": [
+    "Harsh Thakkar <harshthakkar46@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "three.js": "threejs#*",
+    "jquery": "~2.2.0",
+    "threex.dynamictexture": "*"
+  }
+}
