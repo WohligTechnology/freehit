@@ -100,17 +100,17 @@
       // });
 
       // DYANMIMC TEXT
-      var dynamicTexture = new THREEx.DynamicTexture(512, 512);
-      dynamicTexture.texture.needsUpdate = true;
-
-      var url = 'img/ball_texture3.jpg';
-      var image = document.createElement('img');
-      image.src = url;
-      image.addEventListener('load', function() {
-        dynamicTexture.drawImage(image, 0, 0);
-        //var textureLoader = new THREE.TextureLoader();
-        dynamicTexture.drawText('HarsH', 0, 256, 'black');
-      });
+      // var dynamicTexture = new THREEx.DynamicTexture(512, 512);
+      // dynamicTexture.texture.needsUpdate = true;
+      //
+      // var url = 'img/ball_texture3.jpg';
+      // var image = document.createElement('img');
+      // image.src = url;
+      // image.addEventListener('load', function() {
+      //   dynamicTexture.drawImage(image, 0, 0);
+      //   //var textureLoader = new THREE.TextureLoader();
+      //   dynamicTexture.drawText('HarsH', 0, 256, 'black');
+      // });
 
       var geometry = new THREE.SphereGeometry(1, 50, 50);
       var texture2 = new THREE.TextureLoader();
