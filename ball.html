@@ -158,14 +158,14 @@
             src = $('#blah').attr('src');
             var canvas = document.createElement("canvas");
             $("canvas").addClass("mycanvas");
-            canvas.width = 10;
-            canvas.height = 6.67;
+            canvas.width = 1000;
+            canvas.height = 667;
             var c = canvas.getContext("2d");
             var image1 = new Image();
             image1.src = "img/ball_texture3.jpg";
             var image2 = new Image();
             image2.src = src;
-            c.drawImage(image1, 0, 0,1000, 667, 0, 0, 10, 6.67);
+            c.drawImage(image1, 0, 0,1000, 667, 0, 0, 1000, 667);
             c.drawImage(image2, 0, 0, 500, 500, 100, 100, 200, 200);
             var imgsrc = canvas.toDataURL("image/png");
             var geometry = new THREE.SphereGeometry(1, 50, 50);
