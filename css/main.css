@@ -3,3 +3,8 @@ html, body, canvas {
   padding: 0;
   overflow: hidden;
 }
+
+#blah {
+  width: 100px;
+  height: auto;
+}
