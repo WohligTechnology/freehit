@@ -39,7 +39,7 @@
 
       // Creating camera
       camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 10000);
-      camera.position.set(1, 1, 1);
+      camera.position.set(78, 55, 51);
       scene.add(camera);
 
       // Adding Controls
@@ -80,7 +80,10 @@
         var model = new THREE.Object3D();
         model.add(mesh);
         model.scale.set(5, 5, 5);
-        model.position.set(-1000, -2000, 0);
+        model.position.set(0, 0, 0);
+        model.rotation.x = -0.5;
+        model.rotation.y = 0.5;
+        model.rotation.z = 0.5;
         scene.add(model);
       });
     }
