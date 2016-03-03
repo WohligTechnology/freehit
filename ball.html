@@ -13,6 +13,7 @@
     <input type='file' id="imgInp" />
     <img id="blah" src="#" alt="your image" />
   </form>
+  <script src="./bower_components/caman/dist/caman.min.js" charset="utf-8"></script>
   <script src="js/three.js" charset="utf-8"></script>
   <script src="js/OrbitControls.js" charset="utf-8"></script>
   <script src="js/OBJLoader.js" charset="utf-8"></script>
@@ -164,10 +165,14 @@
             var image1 = new Image();
             image1.src = "img/ball_texture3.jpg";
             var image2 = new Image();
+            $(image2).attr('id', 'myimage2');
             image2.src = src;
             c.drawImage(image1, 0, 0,1000, 667, 0, 0, 1000, 667);
-            c.drawImage(image2, 0, 0, 500, 500, 100, 100, 200, 200);
+            c.drawImage(image2, 0, 0, 1000, 1000, 0, 50, 200, 200);
             var imgsrc = canvas.toDataURL("image/png");
+            Caman("#blah", function () {
+              this.channels({red: 210, green: 195, blue: 43}).render();
+            });
             var geometry = new THREE.SphereGeometry(1, 50, 50);
             var textur = new THREE.TextureLoader();
             textur.load(

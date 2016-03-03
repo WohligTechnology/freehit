@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <script src="./bower_components/caman/dist/caman.min.js" charset="utf-8"></script>
   <script src="js/three.js" charset="utf-8"></script>
   <script src="js/OrbitControls.js" charset="utf-8"></script>
   <script src="js/OBJLoader.js" charset="utf-8"></script>
@@ -38,7 +39,7 @@
 
       // Creating camera
       camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 10000);
-      camera.position.set(0, 0, 0);
+      camera.position.set(1, 1, 1);
       scene.add(camera);
 
       // Adding Controls
@@ -78,8 +79,8 @@
         mesh = new THREE.Mesh(geometry, material);
         var model = new THREE.Object3D();
         model.add(mesh);
-        // model.scale.set(5, 5, 5);
-        // model.position.set(-10, -20, 0);
+        model.scale.set(5, 5, 5);
+        model.position.set(-10, -20, 0);
         scene.add(model);
       });
     }
