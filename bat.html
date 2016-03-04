@@ -34,12 +34,13 @@
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       renderer.setSize(width, height);
       document.body.appendChild(renderer.domElement);
-      renderer.setClearColor(0xffffff, 1);
+      renderer.setClearColor(0x777777, 1);
       renderer.recieveShadow = true;
+      renderer.shadowMap.enabled;
 
       // Creating camera
       camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 10000);
-      camera.position.set(78, 55, 51);
+      camera.position.set(1000, 55, 51);
       scene.add(camera);
 
       // Adding Controls
@@ -70,22 +71,54 @@
       camera.add(spotLight);
 
       //Loading json
+      // loader = new THREE.JSONLoader();
+      // loader.load('js/bat.json', function(geometry) {
+      //   var texture = THREE.ImageUtils.loadTexture("img/bat_texture.jpg");
+      //   texture.wrapS = THREE.RepeatWrapping;
+      //   texture.wrapT = THREE.RepeatWrapping;
+      //   material = new THREE.MeshBasicMaterial({ map: texture });
+      //   mesh = new THREE.Mesh(geometry, material);
+      //   var model = new THREE.Object3D();
+      //   model.add(mesh);
+      //   model.scale.set(5, 5, 5);
+      //   model.position.set(0, 0, 0);
+      //   model.rotation.x = -0.5;
+      //   model.rotation.y = 0.5;
+      //   model.rotation.z = 0.5;
+      //   scene.add(model);
+      // });
+
       loader = new THREE.JSONLoader();
-      loader.load('js/bat.json', function(geometry) {
-        var texture = THREE.ImageUtils.loadTexture("img/bat_texture.jpg");
-        texture.wrapS = THREE.RepeatWrapping;
-        texture.wrapT = THREE.RepeatWrapping;
-        material = new THREE.MeshBasicMaterial({ map: texture });
-        mesh = new THREE.Mesh(geometry, material);
-        var model = new THREE.Object3D();
-        model.add(mesh);
-        model.scale.set(5, 5, 5);
-        model.position.set(0, 0, 0);
-        model.rotation.x = -0.5;
-        model.rotation.y = 0.5;
-        model.rotation.z = 0.5;
-        scene.add(model);
+      loader.load('js/bat_new.json', function(geometry) {
+        var texture2 = new THREE.TextureLoader();
+        var url = 'img/bat_texture.jpg';
+        texture2.load(
+          url,
+          function(texture) {
+            var material = new THREE.MeshPhongMaterial({
+              map: texture
+            });
+            $.getJSON("js/bat_new.json", function(json) {
+              //json.materials[0].DbgColor = 0;
+              //console.log(json.materials[0].DbgColor);
+            });
+            mesh = new THREE.Mesh(geometry, material);
+            mesh.castShadow = true;
+            mesh.rotation.x = 0;
+            mesh.rotation.y = 0;
+            mesh.rotation.z = 0;
+            //mesh.material.materials[0].color.set( 0xff0000 );
+            scene.add(mesh);
+          },
+          function(xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+          },
+          function(xhr) {
+            console.log('An error happened');
+          }
+        );
       });
+
     }
 
     function animate() {
