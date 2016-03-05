@@ -32,7 +32,7 @@
     renderer.recieveShadow = true;
 
     camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 10000);
-    camera.position.set(1, 1, 1);
+    camera.position.set(7, 7, 7);
     scene.add(camera);
 
     var controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -57,19 +57,46 @@
     spotLight.castShadow = true;
     camera.add(spotLight);
 
+    // loader = new THREE.JSONLoader();
+    // loader.load('js/bag2.json', function(geometry) {
+    //   //geometry.center();
+    //   var texture = THREE.ImageUtils.loadTexture("img/bat_texture.jpg");
+    //   texture.wrapS = THREE.RepeatWrapping;
+    //   texture.wrapT = THREE.RepeatWrapping;
+    //   material = new THREE.MeshBasicMaterial({ map: texture });
+    //   mesh = new THREE.Mesh(geometry, material);
+    //   var model = new THREE.Object3D();
+    //   model.add(mesh);
+    //   model.scale.set(1, 1, 1);
+    //   model.position.set(10, -20, -55);
+    //   scene.add(model);
+    // });
+
     loader = new THREE.JSONLoader();
-    loader.load('js/bat.json', function(geometry) {
-      //geometry.center();
-      var texture = THREE.ImageUtils.loadTexture("img/bat_texture.jpg");
-      texture.wrapS = THREE.RepeatWrapping;
-      texture.wrapT = THREE.RepeatWrapping;
-      material = new THREE.MeshBasicMaterial({ map: texture });
-      mesh = new THREE.Mesh(geometry, material);
-      var model = new THREE.Object3D();
-      model.add(mesh);
-      model.scale.set(1, 1, 1);
-      model.position.set(10, -20, -55);
-      scene.add(model);
+    loader.load('js/bag.json', function(geometry) {
+      var texture2 = new THREE.TextureLoader();
+      var url = 'img/bag.jpg';
+      texture2.load(
+        url,
+        function(texture) {
+          var material = new THREE.MeshPhongMaterial({
+            map: texture
+          });
+          mesh = new THREE.Mesh(geometry, material);
+          mesh.castShadow = true;
+          mesh.rotation.x = 0;
+          mesh.rotation.y = 0;
+          mesh.rotation.z = 0;
+          //mesh.material.color.set(0x453897);
+          scene.add(mesh);
+        },
+        function(xhr) {
+          console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        },
+        function(xhr) {
+          console.log('An error happened');
+        }
+      );
     });
   }
 

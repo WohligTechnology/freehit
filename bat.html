@@ -65,8 +65,8 @@
       dirlight.shadowCameraFar = 150;
       dirlight.castshadow = true;
 
-      var spotLight = new THREE.SpotLight(0xffffff);
-      spotLight.position.set(1000, 1000, 1000);
+      var spotLight = new THREE.SpotLight(0x999999);
+      spotLight.position.set(0, 0, 0);
       spotLight.castShadow = true;
       camera.add(spotLight);
 
@@ -89,34 +89,39 @@
       // });
 
       loader = new THREE.JSONLoader();
-      loader.load('js/bat_new.json', function(geometry) {
-        var texture2 = new THREE.TextureLoader();
-        var url = 'img/bat_texture.jpg';
-        texture2.load(
-          url,
-          function(texture) {
-            var material = new THREE.MeshPhongMaterial({
-              map: texture
-            });
-            $.getJSON("js/bat_new.json", function(json) {
-              //json.materials[0].DbgColor = 0;
-              //console.log(json.materials[0].DbgColor);
-            });
-            mesh = new THREE.Mesh(geometry, material);
-            mesh.castShadow = true;
-            mesh.rotation.x = 0;
-            mesh.rotation.y = 0;
-            mesh.rotation.z = 0;
-            //mesh.material.materials[0].color.set( 0xff0000 );
-            scene.add(mesh);
-          },
-          function(xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-          },
-          function(xhr) {
-            console.log('An error happened');
-          }
-        );
+      $.getJSON("js/bat2.json", function(json) {
+        var cust_json = json;
+        cust_json.materials[0].DbgColor = 0;
+        console.log(cust_json.materials[0].DbgColor);
+
+        loader.load("js/bat2.json", function(geometry) {
+          var texture2 = new THREE.TextureLoader();
+          //var url = 'img/bat_texture.jpg';
+          //var url = './../../../../../Users/Wohlig/Desktop/download.png';
+          var url = "";
+          texture2.load(
+            url,
+            function(texture) {
+              //console.log(cust_json.materials[0].DbgColor);
+              var material = new THREE.MeshPhongMaterial({
+                map: texture
+              });
+              mesh = new THREE.Mesh(geometry, material);
+              mesh.castShadow = true;
+              mesh.rotation.x = 0;
+              mesh.rotation.y = 0;
+              mesh.rotation.z = 0;
+              scene.add(mesh);
+            },
+            function(xhr) {
+              console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            },
+            function(xhr) {
+              console.log('An error happened');
+            }
+          );
+        });
+
       });
 
     }
