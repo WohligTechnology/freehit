@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Ball</title>
@@ -11,7 +12,7 @@
 <body>
   <form id="form1" runat="server">
     <input type='file' id="imgInp" />
-    <img id="blah" src="#" alt="your image" />
+    <img id="blah" src="#" alt="your image" style="display:none;" />
   </form>
   <script src="./bower_components/caman/dist/caman.min.js" charset="utf-8"></script>
   <script src="js/three.js" charset="utf-8"></script>
@@ -50,7 +51,7 @@
 
       // Creating camera
       camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
-      camera.position.set(0, 4, 8);
+      camera.position.set(0, 0, 6);
       scene.add(camera);
 
       // Adding Controls
@@ -150,29 +151,31 @@
       //     document.write('<img src="' + img + '" width="328" height="526"/>');
       //   }
       // };
-
+      var canvas = document.createElement("canvas");
+      $("canvas").addClass("mycanvas");
+      canvas.width = 1000;
+      canvas.height = 667;
+      var c = canvas.getContext("2d");
       function readURL(input) {
         if (input.files && input.files[0]) {
           var reader = new FileReader();
           reader.onload = function(e) {
             $('#blah').attr('src', e.target.result);
             src = $('#blah').attr('src');
-            var canvas = document.createElement("canvas");
-            $("canvas").addClass("mycanvas");
-            canvas.width = 1000;
-            canvas.height = 667;
-            var c = canvas.getContext("2d");
             var image1 = new Image();
             image1.src = "img/ball_texture3.jpg";
             var image2 = new Image();
             $(image2).attr('id', 'myimage2');
-            image2.src = src;
-            c.drawImage(image1, 0, 0,1000, 667, 0, 0, 1000, 667);
-            c.drawImage(image2, 0, 0, 1000, 1000, 0, 50, 200, 200);
-            var imgsrc = canvas.toDataURL("image/png");
-            Caman("#blah", function () {
-              this.channels({red: 210, green: 195, blue: 43}).render();
+            //image2.src = src;
+            var mmm = tintImage(document.getElementById('myImage2'), "#d2c32b");
+            image2.src = mmm;
+            Caman("#blah", function() {
+              //this.channels({ red: 210, green: 195, blue: 43 }).render();
+              $('#blah').attr('style', 'display: inline-block');
             });
+            c.drawImage(image1, 0, 0, 1000, 667, 0, 0, 1000, 667);
+            c.drawImage(image2, 0, 0, 500, 500, 0, 100, 200, 200);
+            var imgsrc = canvas.toDataURL("image/png", 1.0);
             var geometry = new THREE.SphereGeometry(1, 50, 50);
             var textur = new THREE.TextureLoader();
             textur.load(
@@ -202,6 +205,37 @@
         readURL(this);
         scene.remove(sphere);
       });
+
+      function tintImage(imgElement,tintColor) {
+        // create hidden canvas (using image dimensions)
+        var canvas = document.createElement("canvas");
+        var c = canvas.getContext("2d");
+        //c.drawImage(imgElement,0,0);
+        var map = c.getImageData(0,0,500,500);
+        var imdata = map.data;
+
+        // convert image to grayscale
+        var r,g,b,avg;
+        for(var p = 0, len = imdata.length; p < len; p+=4) {
+            r = imdata[p]
+            g = imdata[p+1];
+            b = imdata[p+2];
+            avg = Math.floor((r+g+b)/3);
+            imdata[p] = imdata[p+1] = imdata[p+2] = avg;
+        }
+
+        c.putImageData(map,0,0);
+
+        // overlay filled rectangle using lighter composition
+        c.globalCompositeOperation = "lighter";
+        c.globalAlpha = 0.5;
+        c.fillStyle = tintColor;
+        c.fillRect(0,0,canvas.width,canvas.height);
+
+        // replace image source with canvas data
+        var srcm = canvas.toDataURL();
+        return srcm;
+      }
 
       // Native Sphere
 

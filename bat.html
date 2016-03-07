@@ -9,6 +9,10 @@
 </head>
 
 <body>
+  <form id="form1" runat="server">
+    <input type='file' id="imgInp" />
+    <img id="blah" src="#" alt="your image" style="display:none;" />
+  </form>
   <!-- <script src="./bower_components/caman/dist/caman.min.js" charset="utf-8"></script> -->
   <script src="js/three.js" charset="utf-8"></script>
   <script src="js/OrbitControls.js" charset="utf-8"></script>
@@ -89,41 +93,83 @@
       // });
 
       loader = new THREE.JSONLoader();
-      $.getJSON("js/bat2.json", function(json) {
-        var cust_json = json;
-        cust_json.materials[0].DbgColor = 0;
-        console.log(cust_json.materials[0].DbgColor);
-
-        loader.load("js/bat2.json", function(geometry) {
-          var texture2 = new THREE.TextureLoader();
-          //var url = 'img/bat_texture.jpg';
-          //var url = './../../../../../Users/Wohlig/Desktop/download.png';
-          var url = "";
-          texture2.load(
-            url,
-            function(texture) {
-              //console.log(cust_json.materials[0].DbgColor);
-              var material = new THREE.MeshPhongMaterial({
-                map: texture
-              });
-              mesh = new THREE.Mesh(geometry, material);
-              mesh.castShadow = true;
-              mesh.rotation.x = 0;
-              mesh.rotation.y = 0;
-              mesh.rotation.z = 0;
-              scene.add(mesh);
-            },
-            function(xhr) {
-              console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-            },
-            function(xhr) {
-              console.log('An error happened');
-            }
-          );
-        });
-
+      loader.load("js/bat2.json", function(geometry) {
+        var texture2 = new THREE.TextureLoader();
+        var url = 'img/bat_texture.jpg';
+        texture2.load(
+          url,
+          function(texture) {
+            var material = new THREE.MeshPhongMaterial({
+              map: texture
+            });
+            material.setValues();
+            mesh = new THREE.Mesh(geometry, material);
+            mesh.castShadow = true;
+            mesh.rotation.x = 0;
+            mesh.rotation.y = 0;
+            mesh.rotation.z = 0;
+            scene.add(mesh);
+          },
+          function(xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+          },
+          function(xhr) {
+            console.log('An error happened');
+          }
+        );
       });
 
+      var canvas = document.createElement("canvas");
+      $("canvas").addClass("mycanvas");
+      canvas.width = 1200;
+      canvas.height = 396;
+      var c = canvas.getContext("2d");
+      function readURL(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            $('#blah').attr('src', e.target.result);
+            src = $('#blah').attr('src');
+            var image1 = new Image();
+            image1.src = "img/bat_texture.jpg";
+            var image2 = new Image();
+            $(image2).attr('id', 'myimage2');
+            image2.src = src;
+            c.drawImage(image1, 0, 0, 1200, 396, 0, 0, 1200, 396);
+            c.drawImage(image2, 0, 0, 500, 500, 0, 0, 200, 200);
+            var imgsrc = canvas.toDataURL("image/png", 1.0);
+            loader = new THREE.JSONLoader();
+            loader.load("js/bat2.json", function(geometry) {
+              var textur = new THREE.TextureLoader();
+              textur.load(
+                imgsrc,
+                function(texture) {
+                  var material = new THREE.MeshPhongMaterial({
+                    map: texture
+                  });
+                  var mmesh = new THREE.Mesh(geometry, material);
+                  mmesh.castShadow = true;
+                  mmesh.rotation.x = 0;
+                  mmesh.rotation.y = 0;
+                  mmesh.rotation.z = 0;
+                  scene.add(mmesh);
+                },
+                function(xhr) {
+                  console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                },
+                function(xhr) {
+                  console.log('An error happened');
+                }
+              );
+            });
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+      $("#imgInp").change(function() {
+        readURL(this);
+        scene.remove(mesh);
+      });
     }
 
     function animate() {
