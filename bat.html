@@ -9,10 +9,10 @@
 </head>
 
 <body>
-  <form id="form1" runat="server">
+  <!-- <form id="form1" runat="server">
     <input type='file' id="imgInp" />
     <img id="blah" src="#" alt="your image" style="display:none;" />
-  </form>
+  </form> -->
   <!-- <script src="./bower_components/caman/dist/caman.min.js" charset="utf-8"></script> -->
   <script src="js/three.js" charset="utf-8"></script>
   <script src="js/OrbitControls.js" charset="utf-8"></script>
@@ -93,15 +93,16 @@
       // });
 
       loader = new THREE.JSONLoader();
-      loader.load("js/bat2.json", function(geometry) {
+      loader.load("../threed/js/gilli.json", function(geometry) {
         var texture2 = new THREE.TextureLoader();
         var url = 'img/bat_texture.jpg';
         texture2.load(
           url,
           function(texture) {
-            var material = new THREE.MeshPhongMaterial({
+            var material = new THREE.MeshLambertMaterial({
               map: texture
             });
+            texture.needsUpdate = true;
             material.setValues();
             mesh = new THREE.Mesh(geometry, material);
             mesh.castShadow = true;
@@ -136,7 +137,7 @@
             $(image2).attr('id', 'myimage2');
             image2.src = src;
             c.drawImage(image1, 0, 0, 1200, 396, 0, 0, 1200, 396);
-            c.drawImage(image2, 0, 0, 500, 500, 0, 0, 200, 200);
+            c.drawImage(image2, 0, 0, 500, 500, 400, 0, 200, 200);
             var imgsrc = canvas.toDataURL("image/png", 1.0);
             loader = new THREE.JSONLoader();
             loader.load("js/bat2.json", function(geometry) {

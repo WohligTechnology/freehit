@@ -166,9 +166,10 @@
             image1.src = "img/ball_texture3.jpg";
             var image2 = new Image();
             $(image2).attr('id', 'myimage2');
+            $(image2).attr('style', 'background-color: yellow');
             //image2.src = src;
             var mmm = tintImage(document.getElementById('myImage2'), "#d2c32b");
-            image2.src = mmm;
+            image2.src = src;
             Caman("#blah", function() {
               //this.channels({ red: 210, green: 195, blue: 43 }).render();
               $('#blah').attr('style', 'display: inline-block');
