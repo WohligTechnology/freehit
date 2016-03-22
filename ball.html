@@ -15,7 +15,7 @@
     <img id="blah" src="#" alt="your image" style="display:none;" />
   </form>
   <div class="mydivv"></div>
-  <script src="./bower_components/caman/dist/caman.min.js" charset="utf-8"></script>
+  <!-- <script src="./bower_components/caman/dist/caman.min.js" charset="utf-8"></script> -->
   <script src="js/three.js" charset="utf-8"></script>
   <script src="js/OrbitControls.js" charset="utf-8"></script>
   <script src="js/OBJLoader.js" charset="utf-8"></script>
@@ -248,10 +248,6 @@
               fillColor(color);
             }
             overalayColor(document.getElementById('harshimage'), "#d2c32b");
-            Caman("#blah", function() {
-              //this.channels({ red: 210, green: 195, blue: 43 }).render();
-              // $('#blah').attr('style', 'display: inline-block');
-            });
             //c.drawImage(image1, 0, 0, 1000, 667, 0, 0, 1000, 667);
             c.drawImage(image2, 0, 0, 500, 500, 0, 100, 200, 200);
             var imgsrc = canvas.toDataURL("image/png", 1.0);
