@@ -14,6 +14,7 @@
     <input type='file' id="imgInp" />
     <img id="blah" src="#" alt="your image" style="display:none;" />
   </form>
+  <div class="mydivv"></div>
   <script src="./bower_components/caman/dist/caman.min.js" charset="utf-8"></script>
   <script src="js/three.js" charset="utf-8"></script>
   <script src="js/OrbitControls.js" charset="utf-8"></script>
@@ -162,25 +163,102 @@
           reader.onload = function(e) {
             $('#blah').attr('src', e.target.result);
             src = $('#blah').attr('src');
-            var image1 = new Image();
-            image1.src = "img/ball_texture3.jpg";
             var image2 = new Image();
             $(image2).attr('id', 'myimage2');
-            $(image2).attr('style', 'background-color: yellow');
-            //image2.src = src;
-            var mmm = tintImage(document.getElementById('myImage2'), "#d2c32b");
+            $('.mydivv').append('<img src="' + src + '" id="harshimage"></img>');
+            $('.mydivv').css('display', 'none');
             image2.src = src;
+            // var imgW = image2.width;
+            // var imgH = image2.height;
+            // var r,g,b,avg;
+            // for(var p = 0, len = image2.length; p < len; p+=4) {
+            //     r = image2[p]
+            //     g = image2[p+1];
+            //     b = image2[p+2];
+            //     avg = Math.floor((r+g+b)/3);
+            //     image2[p] = image2[p+1] = image2[p+2] = avg;
+            // }
+            // c.drawImage(image1, 0, 0, 1000, 667, 0, 0, 1000, 667);
+            // c.drawImage(image2, 0, 0, 500, 500, 0, 100, 200, 200);
+            // var mmm = tintImage(image2, "#d2c32b");
+            //image2.src = src;
+            var selectImg = '';
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+            var originalPixels = null;
+            var currentPixels = null;
+            var color = '';
+            var fullimg = '';
+            canvas.width = 1000;
+            canvas.height = 667;
+
+            // Function for convert Hexdecimal code into RGB color
+            function HexToRGB(Hex) {
+              var Long = parseInt(Hex.replace(/^#/, ""), 16);
+              return {
+                R: (Long >>> 16) & 0xff,
+                G: (Long >>> 8) & 0xff,
+                B: Long & 0xff
+              };
+            }
+            // Function to fill the color of generated image
+            function fillColor(path) {
+              color = path;
+
+              if (!originalPixels) return; // Check if image has loaded
+              var newColor = HexToRGB(color);
+
+              for (var I = 0, L = originalPixels.data.length; I < L; I += 4) {
+                if (currentPixels.data[I + 3] > 0) {
+                  currentPixels.data[I] = newColor.R;
+                  currentPixels.data[I + 1] = newColor.G;
+                  currentPixels.data[I + 2] = newColor.B;
+                }
+              }
+
+              var image1 = new Image();
+              image1.src = "img/ball_texture3.jpg";
+              ctx.drawImage(image1, 0, 0, 1000, 667, 0, 0, 1000, 667);
+              var cann = document.createElement("canvas");
+              cann.width = selectImg.width;
+              cann.height = selectImg.height;
+              var ctc = cann.getContext("2d");
+              ctc.putImageData(currentPixels, 0, 0);
+              var newImm = new Image();
+              newImm.src = cann.toDataURL("image/png");
+              ctx.drawImage(newImm, 0, 0, 400, 400, 0, 100, cann.width / 2, cann.height / 2);
+              fullimg = canvas.toDataURL("image/png");
+            }
+
+            // Function for draw a image
+            function overalayColor(himg, color) {
+              fullimg = himg[0];
+
+              img = new Image();
+              img.src = himg.src;
+              selectImg = himg;
+              canvas.width = 1000;
+              canvas.height = 667;
+
+              ctx.drawImage(selectImg, 0, 0, selectImg.naturalWidth, selectImg.naturalHeight, 0, 0, selectImg.width, selectImg.height);
+              originalPixels = ctx.getImageData(0, 0, selectImg.width, selectImg.height);
+              currentPixels = ctx.getImageData(0, 0, selectImg.width, selectImg.height);
+
+              selectImg.onload = null;
+              fillColor(color);
+            }
+            overalayColor(document.getElementById('harshimage'), "#d2c32b");
             Caman("#blah", function() {
               //this.channels({ red: 210, green: 195, blue: 43 }).render();
-              $('#blah').attr('style', 'display: inline-block');
+              // $('#blah').attr('style', 'display: inline-block');
             });
-            c.drawImage(image1, 0, 0, 1000, 667, 0, 0, 1000, 667);
+            //c.drawImage(image1, 0, 0, 1000, 667, 0, 0, 1000, 667);
             c.drawImage(image2, 0, 0, 500, 500, 0, 100, 200, 200);
             var imgsrc = canvas.toDataURL("image/png", 1.0);
             var geometry = new THREE.SphereGeometry(1, 50, 50);
             var textur = new THREE.TextureLoader();
             textur.load(
-              imgsrc,
+              fullimg,
               function(texture) {
                 var material = new THREE.MeshPhongMaterial({
                   map: texture
@@ -262,6 +340,12 @@
       //     }
       //   );
       // });
+
+      //Get the selected color code
+      // $('select').change(function() {
+      //   overalayColor(jQuery(this).val());
+      // });
+
     }
 
     function animate() {
