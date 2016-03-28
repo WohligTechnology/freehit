@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Ball</title>
+  <link rel="stylesheet" href="../freehit/css/main.css" media="screen" title="no title" charset="utf-8">
+  <script src="../freehit/js/jquery.min.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <form id="form1" runat="server">
+    <input type='file' id="imgInp" class="file-input" />
+    <img id="blah" src="#" alt="your image" />
+  </form>
+  <div class="mydivv"></div>
+  <script src="../freehit/js/three.js" charset="utf-8"></script>
+  <script src="../freehit/js/OrbitControls.js" charset="utf-8"></script>
+  <script src="../freehit/js/OBJLoader.js" charset="utf-8"></script>
+  <script src="../freehit/js/TextGeometry.js" charset="utf-8"></script>
+  <script src="../freehit/js/TransformControls.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    // Creating variables at one place
+    var scene, camera, renderer,
+      width, height, light,
+      loader, material, mesh;
+
+    // methods to call
+    init();
+    animate();
+
+    // defining methods
+    function init() {
+      // Creating scene
+      scene = new THREE.Scene();
+      width = window.innerWidth;
+      height = window.innerHeight;
+
+      // Creating renderer
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(width, height);
+      document.body.appendChild(renderer.domElement);
+      renderer.setClearColor(0xffffff, 1);
+      renderer.recieveShadow = true;
+      renderer.autoClear = false;
+
+      // Creating camera
+      camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
+      camera.position.set(0, 0, 6);
+      scene.add(camera);
+
+      // Adding Controls
+      var controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableZoom = false;
+
+      // Updating viewport
+      window.addEventListener('resize', function() {
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      });
+
+      // Adding Ambient light
+      amblight = new THREE.AmbientLight(0xffffff);
+      scene.add(amblight);
+
+      // Adding Directional light
+      dirlight = new THREE.DirectionalLight(0xffffff, 0.5);
+      dirlight.shadowCameraNear = 1;
+      dirlight.shadowCameraFar = 150;
+      dirlight.castshadow = true;
+
+      var spotLight = new THREE.SpotLight(0xffffff);
+      spotLight.position.set(1000, 1000, 1000);
+      spotLight.castShadow = true;
+      camera.add(spotLight);
+
+      var geometry = new THREE.SphereGeometry(1, 50, 50);
+      var texture2 = new THREE.TextureLoader();
+      var url = '../freehit/img/ball_texture3.jpg';
+      texture2.load(
+        url,
+        function(texture) {
+          var material = new THREE.MeshPhongMaterial({
+            map: texture
+          });
+          sphere = new THREE.Mesh(geometry, material);
+          sphere.castShadow = true;
+          sphere.rotation.x = 1;
+          sphere.rotation.y = -5.5;
+          sphere.rotation.z = -1;
+          scene.add(sphere);
+        },
+        function(xhr) {
+          console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        },
+        function(xhr) {
+          console.log('An error happened');
+        }
+      );
+
+      var canvas = document.createElement("canvas");
+      $("canvas").addClass("mycanvas");
+      canvas.width = 1000;
+      canvas.height = 667;
+      var c = canvas.getContext("2d");
+      function readURL(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            $('#blah').attr('src', e.target.result);
+            src = $('#blah').attr('src');
+            var image2 = new Image();
+            $(image2).attr('id', 'myimage2');
+            $('.mydivv').append('<img src="' + src + '" id="harshimage"></img>');
+            $('.mydivv').css('display', 'none');
+            image2.src = src;
+            var selectImg = '';
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+            var canvasx = document.createElement("canvas");
+            var ctxx = canvasx.getContext("2d");
+            var originalPixels = null;
+            var currentPixels = null;
+            var color = '';
+            var fullimg = '';
+            canvas.width = 1000;
+            canvas.height = 667;
+            canvasx.width = 1000;
+            canvasx.height = 667;
+
+            // Function for convert Hexdecimal code into RGB color
+            function HexToRGB(Hex) {
+              var Long = parseInt(Hex.replace(/^#/, ""), 16);
+              return {
+                R: (Long >>> 16) & 0xff,
+                G: (Long >>> 8) & 0xff,
+                B: Long & 0xff
+              };
+            }
+            // Function to fill the color of generated image
+            function fillColor(path) {
+              color = path;
+
+              if (!originalPixels) return; // Check if image has loaded
+              var newColor = HexToRGB(color);
+
+              for (var I = 0, L = originalPixels.data.length; I < L; I += 4) {
+                if (currentPixels.data[I + 3] > 0) {
+                  currentPixels.data[I] = newColor.R;
+                  currentPixels.data[I + 1] = newColor.G;
+                  currentPixels.data[I + 2] = newColor.B;
+                }
+              }
+
+              var image1 = new Image();
+              image1.src = "../freehit/img/ball_texture3.jpg";
+              // ctx.drawImage(image1, 0, 0, 1000, 667, 0, 0, 1000, 667);
+              var cann = document.createElement("canvas");
+              cann.width = selectImg.width;
+              cann.height = selectImg.height;
+              var ctc = cann.getContext("2d");
+              ctc.putImageData(currentPixels, 0, 0);
+              var newImm = new Image();
+              newImm.src = cann.toDataURL("image/png");
+              ctx.drawImage(newImm, 0, 0, 300, 300, 10, 80, 250, 250);
+              fullimg = canvas.toDataURL("image/png");
+            }
+
+            // Function for draw a image
+            function overalayColor(himg, color) {
+              fullimg = himg[0];
+              img = new Image();
+              img.src = himg.src;
+              selectImg = himg;
+              canvas.width = 1000;
+              canvas.height = 667;
+
+              ctxx.drawImage(selectImg, 0, 0, selectImg.naturalWidth, selectImg.naturalHeight, 0, 0, selectImg.width, selectImg.height);
+              originalPixels = ctxx.getImageData(0, 0, selectImg.width, selectImg.height);
+              currentPixels = ctxx.getImageData(0, 0, selectImg.width, selectImg.height);
+
+              selectImg.onload = null;
+              fillColor(color);
+            }
+            // overalayColor(document.getElementById('harshimage'), "#d2c32b");
+            overalayColor(document.getElementById('harshimage'), "#ffd700");
+            // overalayColor(document.getElementById('harshimage'), "#007dff");
+            // c.drawImage(image2, 0, 0, 500, 500, 0, 100, 200, 200);
+            var imgsrc = canvas.toDataURL("image/png", 1.0);
+            var geometry = new THREE.SphereGeometry(1, 500, 500);
+            var textur = new THREE.TextureLoader();
+            textur.load(
+              fullimg,
+              function(texture) {
+                var material = new THREE.MeshPhongMaterial({ map: texture, transparent: true });
+                material.map.needsUpdate = true;
+                var mysphere = new THREE.Mesh(geometry, material);
+                mysphere.rotation.x = 0.1;
+                mysphere.rotation.y = -5.0;
+                mysphere.rotation.z = -1;
+                scene.add(mysphere);
+              },
+              function(xhr) {
+                console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+              },
+              function(xhr) {
+                console.log('An error happened');
+              }
+            );
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+      $("#imgInp").change(function() {
+        readURL(this);
+      });
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+  </script>
+</body>
+
+</html>
