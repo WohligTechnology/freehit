@@ -92,7 +92,37 @@
           sphere.rotation.y = -5.5;
           sphere.rotation.z = -1;
           scene.add(sphere);
-          overalayColor(document.getElementById('ccc'), "#ffd700");
+        },
+        function(xhr) {
+          console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        },
+        function(xhr) {
+          console.log('An error happened');
+        }
+      );
+
+      var ccccanvas = document.createElement("canvas");
+      ccccanvas.width = 1000;
+      ccccanvas.height = 667;
+      var c = ccccanvas.getContext("2d");
+      var cccimage = document.getElementById('ccc');
+      c.drawImage(cccimage, 0, 0, 300, 300, 10, 120, 250, 250);
+      var cccimg = '';
+      cccimg = ccccanvas.toDataURL("image/png");
+      var geometry = new THREE.SphereGeometry(1, 500, 500);
+      var texture2 = new THREE.TextureLoader();
+      texture2.load(
+        cccimg,
+        function(texture) {
+          var material = new THREE.MeshPhongMaterial({
+            map: texture, transparent: true
+          });
+          sphere = new THREE.Mesh(geometry, material);
+          sphere.castShadow = true;
+          sphere.rotation.x = 0.5;
+          sphere.rotation.y = -7;
+          sphere.rotation.z = -4.5;
+          scene.add(sphere);
         },
         function(xhr) {
           console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -121,7 +151,7 @@
 
             overalayColor(document.getElementById('harshimage'), "#ffd700");
             var imgsrc = canvas.toDataURL("image/png", 1.0);
-            var geometry = new THREE.SphereGeometry(1, 500, 500);
+            var geometry = new THREE.SphereGeometry(1, 5000, 5000);
             var textur = new THREE.TextureLoader();
             textur.load(
               fullimg,
@@ -130,7 +160,7 @@
                 material.map.needsUpdate = true;
                 var mysphere = new THREE.Mesh(geometry, material);
                 mysphere.rotation.x = 0.1;
-                mysphere.rotation.y = -5.0;
+                mysphere.rotation.y = -5;
                 mysphere.rotation.z = -1;
                 scene.add(mysphere);
               },
