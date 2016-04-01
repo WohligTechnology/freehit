@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <title>Ball</title>
-  <link rel="stylesheet" href="../freehit/css/main.css" media="screen" title="no title" charset="utf-8">
-  <script src="../freehit/js/jquery.min.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="css/main.css" media="screen" title="no title" charset="utf-8">
+  <script src="js/jquery.min.js" charset="utf-8"></script>
 </head>
 
 <body>
@@ -16,11 +16,11 @@
   <div class="mydivv">
     <img src="img/ccc.png" alt="" id="ccc" style="display: none;">
   </div>
-  <script src="../freehit/js/three.js" charset="utf-8"></script>
-  <script src="../freehit/js/OrbitControls.js" charset="utf-8"></script>
-  <script src="../freehit/js/OBJLoader.js" charset="utf-8"></script>
-  <script src="../freehit/js/TextGeometry.js" charset="utf-8"></script>
-  <script src="../freehit/js/TransformControls.js" charset="utf-8"></script>
+  <script src="js/three.js" charset="utf-8"></script>
+  <script src="js/OrbitControls.js" charset="utf-8"></script>
+  <script src="js/OBJLoader.js" charset="utf-8"></script>
+  <script src="js/TextGeometry.js" charset="utf-8"></script>
+  <script src="js/TransformControls.js" charset="utf-8"></script>
   <script type="text/javascript">
     // Creating variables at one place
     var scene, camera, renderer,
@@ -79,7 +79,7 @@
 
       var geometry = new THREE.SphereGeometry(1, 50, 50);
       var texture2 = new THREE.TextureLoader();
-      var url = '../freehit/img/ball_texture3.jpg';
+      var url = 'img/ball_texture3.jpg';
       texture2.load(
         url,
         function(texture) {
@@ -109,15 +109,16 @@
       c.drawImage(cccimage, 0, 0, 300, 300, 10, 120, 250, 250);
       var cccimg = '';
       cccimg = ccccanvas.toDataURL("image/png");
-      var geometry = new THREE.SphereGeometry(1, 500, 500);
-      var texture2 = new THREE.TextureLoader();
-      texture2.load(
+      var cccgeometry = new THREE.SphereGeometry(1, 500, 500);
+      var ccctexture2 = new THREE.TextureLoader();
+      ccctexture2.load(
         cccimg,
-        function(texture) {
-          var material = new THREE.MeshPhongMaterial({
-            map: texture, transparent: true
+        function(ccctexture) {
+          var cccmaterial = new THREE.MeshPhongMaterial({
+            map: ccctexture, transparent: true
           });
-          sphere = new THREE.Mesh(geometry, material);
+          console.log(ccctexture);
+          sphere = new THREE.Mesh(cccgeometry, cccmaterial);
           sphere.castShadow = true;
           sphere.rotation.x = 0.5;
           sphere.rotation.y = -7;
@@ -151,7 +152,7 @@
 
             overalayColor(document.getElementById('harshimage'), "#ffd700");
             var imgsrc = canvas.toDataURL("image/png", 1.0);
-            var geometry = new THREE.SphereGeometry(1, 5000, 5000);
+            var geometry = new THREE.SphereGeometry(1, 750, 800);
             var textur = new THREE.TextureLoader();
             textur.load(
               fullimg,
