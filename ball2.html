@@ -14,7 +14,7 @@
     <img id="blah" src="#" alt="your image" />
   </form>
   <div class="mydivv">
-    <img src="img/ccc.png" alt="" id="ccc" style="display: none;">
+    <img src="img/ccc.png" alt="" id="ccc" class="cccimage" style="display: none;">
   </div>
   <script src="js/three.js" charset="utf-8"></script>
   <script src="js/OrbitControls.js" charset="utf-8"></script>
@@ -28,8 +28,11 @@
       loader, material, mesh;
 
     // methods to call
-    init();
+    $(".cccimage").load(function() {
+      init();
     animate();
+    });
+
 
     // defining methods
     function init() {
