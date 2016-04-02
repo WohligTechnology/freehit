@@ -74,26 +74,8 @@
       spotLight.castShadow = true;
       camera.add(spotLight);
 
-      //Loading json
-      // loader = new THREE.JSONLoader();
-      // loader.load('js/bat.json', function(geometry) {
-      //   var texture = THREE.ImageUtils.loadTexture("img/bat_texture.jpg");
-      //   texture.wrapS = THREE.RepeatWrapping;
-      //   texture.wrapT = THREE.RepeatWrapping;
-      //   material = new THREE.MeshBasicMaterial({ map: texture });
-      //   mesh = new THREE.Mesh(geometry, material);
-      //   var model = new THREE.Object3D();
-      //   model.add(mesh);
-      //   model.scale.set(5, 5, 5);
-      //   model.position.set(0, 0, 0);
-      //   model.rotation.x = -0.5;
-      //   model.rotation.y = 0.5;
-      //   model.rotation.z = 0.5;
-      //   scene.add(model);
-      // });
-
       loader = new THREE.JSONLoader();
-      loader.load("js/bat2.json", function(geometry) {
+      loader.load("js/json/bat2.json", function(geometry) {
         var texture2 = new THREE.TextureLoader();
         var url = 'img/bat_texture.jpg';
         texture2.load(
@@ -118,59 +100,60 @@
             console.log('An error happened');
           }
         );
-      });
-
-      var canvas = document.createElement("canvas");
-      $("canvas").addClass("mycanvas");
-      canvas.width = 1200;
-      canvas.height = 396;
-      var c = canvas.getContext("2d");
-      function readURL(input) {
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            $('#blah').attr('src', e.target.result);
-            src = $('#blah').attr('src');
-            var image1 = new Image();
-            image1.src = "img/bat_texture.jpg";
-            var image2 = new Image();
-            $(image2).attr('id', 'myimage2');
-            image2.src = src;
-            c.drawImage(image1, 0, 0, 1200, 396, 0, 0, 1200, 396);
-            c.drawImage(image2, 0, 0, 500, 500, 400, 0, 200, 200);
-            var imgsrc = canvas.toDataURL("image/png", 1.0);
-            loader = new THREE.JSONLoader();
-            loader.load("js/bat2.json", function(geometry) {
-              var textur = new THREE.TextureLoader();
-              textur.load(
-                imgsrc,
-                function(texture) {
-                  var material = new THREE.MeshPhongMaterial({
-                    map: texture
-                  });
-                  var mmesh = new THREE.Mesh(geometry, material);
-                  mmesh.castShadow = true;
-                  mmesh.rotation.x = 0;
-                  mmesh.rotation.y = 0;
-                  mmesh.rotation.z = 0;
-                  scene.add(mmesh);
-                },
-                function(xhr) {
-                  console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-                },
-                function(xhr) {
-                  console.log('An error happened');
-                }
-              );
-            });
-          }
-          reader.readAsDataURL(input.files[0]);
-        }
-      }
-      $("#imgInp").change(function() {
-        readURL(this);
-        scene.remove(mesh);
-      });
+      // });
+      //
+      // var canvas = document.createElement("canvas");
+      // $("canvas").addClass("mycanvas");
+      // canvas.width = 1200;
+      // canvas.height = 396;
+      // var c = canvas.getContext("2d");
+      // function readURL(input) {
+      //   if (input.files && input.files[0]) {
+      //     var reader = new FileReader();
+      //     reader.onload = function(e) {
+      //       $('#blah').attr('src', e.target.result);
+      //       src = $('#blah').attr('src');
+      //       var image1 = new Image();
+      //       image1.src = "img/bat_texture.jpg";
+      //       var image2 = new Image();
+      //       $(image2).attr('id', 'myimage2');
+      //       image2.src = src;
+      //       c.drawImage(image1, 0, 0, 1200, 396, 0, 0, 1200, 396);
+      //       c.drawImage(image2, 0, 0, 500, 500, 400, 0, 200, 200);
+      //       var imgsrc = canvas.toDataURL("image/png", 1.0);
+      //       loader = new THREE.JSONLoader();
+      //       loader.load("js/json/bat2.json", function(geometry) {
+      //         var textur = new THREE.TextureLoader();
+      //         textur.load(
+      //           imgsrc,
+      //           function(texture) {
+      //             var material = new THREE.MeshPhongMaterial({
+      //               map: texture
+      //             });
+      //             var mmesh = new THREE.Mesh(geometry, material);
+      //             mmesh.castShadow = true;
+      //             mmesh.rotation.x = 0;
+      //             mmesh.rotation.y = 0;
+      //             mmesh.rotation.z = 0;
+      //             scene.add(mmesh);
+      //           },
+      //           function(xhr) {
+      //             console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+      //           },
+      //           function(xhr) {
+      //             console.log('An error happened');
+      //           }
+      //         );
+      //       });
+      //     }
+      //     reader.readAsDataURL(input.files[0]);
+      //   }
+      // }
+      // $("#imgInp").change(function() {
+      //   readURL(this);
+      //   scene.remove(mesh);
+      // });
+    });
     }
 
     function animate() {

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>White Tshirt</title>
+    <link rel="stylesheet" href="css/main.css" media="screen" charset="utf-8">
+    <script src="js/jquery.min.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <script src="js/three.js" charset="utf-8"></script>
+    <script src="js/OrbitControls.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        // Creating variables at one place
+        var scene, camera, renderer,
+            width, height, light,
+            loader, material, mesh;
+
+        // methods to call
+        init();
+        animate();
+
+        // defining methods
+        function init() {
+            // Creating scene
+            scene = new THREE.Scene();
+            width = window.innerWidth;
+            height = window.innerHeight;
+
+            // Creating renderer
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(width, height);
+            document.body.appendChild(renderer.domElement);
+            renderer.setClearColor(0x000000, 1);
+            renderer.recieveShadow = true;
+            renderer.autoClear = false;
+
+            // Creating camera
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
+            camera.position.set(0, 0, 15);
+            scene.add(camera);
+
+            // Adding Controls
+            var controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableZoom = false;
+
+            // Adding Ambient light and spotlight
+            amblight = new THREE.AmbientLight(0x777777);
+            scene.add(amblight);
+
+            var spotLight = new THREE.SpotLight(0xaaaaaa);
+            spotLight.position.set(1000, 1000, 1000);
+            scene.add(amblight);
+            camera.add(spotLight);
+
+            loader = new THREE.JSONLoader();
+            loader.load("js/json/whitetshirt.json", function(geometry) {
+                var texture2 = new THREE.TextureLoader();
+                var url = 'img/ball_texture3.jpg';
+                texture2.load(
+                    url,
+                    function(texture) {
+                        var material = new THREE.MeshPhongMaterial({ color: 0xffffff });
+                        sphere = new THREE.Mesh(geometry, material);
+                        scene.add(sphere);
+                    },
+                    function(xhr) {
+                        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                    },
+                    function(xhr) {
+                        console.log('An error happened');
+                    }
+                );
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+
+</html>

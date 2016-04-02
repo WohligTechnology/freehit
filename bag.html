@@ -67,7 +67,7 @@
     camera.add(spotLight);
 
     loader = new THREE.JSONLoader();
-    loader.load('js/bag2.json', function(geometry) {
+    loader.load('js/json/bag2.json', function(geometry) {
       var texture2 = new THREE.TextureLoader();
       var url = 'img/bag.jpg';
       texture2.load(
@@ -113,7 +113,7 @@
           c.drawImage(image2, 0, 0, 500, 500, 50, 100, 500, 500);
           var imgsrc = canvas.toDataURL("image/png", 1.0);
           loader = new THREE.JSONLoader();
-          loader.load("js/bag2.json", function(geometry) {
+          loader.load("js/json/bag2.json", function(geometry) {
             var textur = new THREE.TextureLoader();
             textur.load(
               imgsrc,
