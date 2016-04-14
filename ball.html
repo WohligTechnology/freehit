@@ -28,11 +28,14 @@
       loader, material, mesh;
 
     // methods to call
-    $(".cccimage").load(function() {
-      init();
-      animate();
+    $(document).ready(function () {
+      setTimeout(function () {
+        init();
+        animate();
+      }, 500);
     });
 
+    //$(".cccimage").load(function() {});
 
     // defining methods
     function init() {

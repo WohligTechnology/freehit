@@ -18,8 +18,12 @@
             loader, material, mesh;
 
         // methods to call
-        init();
-        animate();
+        $(document).ready(function () {
+          setTimeout(function () {
+            init();
+            animate();
+          }, 500);
+        });
 
         // defining methods
         function init() {

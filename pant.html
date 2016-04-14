@@ -21,8 +21,13 @@
 
   var scene, camera, renderer, width, height, light, loader, material, mesh;
 
-  init();
-  animate();
+  // methods to call
+  $(document).ready(function () {
+    setTimeout(function () {
+      init();
+      animate();
+    }, 500);
+  });
 
   function init() {
     scene = new THREE.Scene();

@@ -23,9 +23,13 @@
       width, height, light,
       loader, material, mesh;
 
-    // methods to call
-    init();
-    animate();
+      // methods to call
+      $(document).ready(function () {
+        setTimeout(function () {
+          init();
+          animate();
+        }, 500);
+      });
 
     // defining methods
     function init() {
