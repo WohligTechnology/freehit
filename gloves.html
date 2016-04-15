@@ -39,7 +39,7 @@
             });
             renderer.setSize(width, height);
             document.body.appendChild(renderer.domElement);
-            renderer.setClearColor(0xffffff, 1);
+            renderer.setClearColor(0x000000, 1);
             renderer.recieveShadow = true;
             renderer.autoClear = false;
 
@@ -51,13 +51,6 @@
             // Adding Controls
             var controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableZoom = false;
-
-            // Updating viewport
-            window.addEventListener('resize', function() {
-                renderer.setSize(width, height);
-                camera.aspect = width / height;
-                camera.updateProjectionMatrix();
-            });
 
             // Adding Ambient light and spotlight
             amblight = new THREE.AmbientLight(0xffffff);
@@ -75,7 +68,7 @@
                 texture2.load(
                     url,
                     function(texture) {
-                        var material = new THREE.MeshPhongMaterial({ color: 0x800a16 });
+                        var material = new THREE.MeshPhongMaterial({ color: 0x800a16});
                         sphere = new THREE.Mesh(geometry, material);
                         scene.add(sphere);
                     },
