@@ -1,92 +1,108 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+	<head>
+		<title>OBJ MTL loader</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000; color: #fff;
+				margin: 0px; overflow: hidden;
+			}
+		</style>
+	</head>
 
-<head>
-    <meta charset="utf-8">
-    <title>Pad</title>
-    <link rel="stylesheet" href="css/main.css" media="screen" charset="utf-8">
-    <script src="js/jquery.min.js" charset="utf-8"></script>
-</head>
+	<body>
+		<script src="../three.js-master/build/three.min.js"></script>
+		<script src="../three.js-master/examples/js/loaders/DDSLoader.js"></script>
+		<script src="../three.js-master/examples/js/loaders/MTLLoader.js"></script>
+		<script src="../three.js-master/examples/js/loaders/OBJMTLLoader.js"></script>
+		<script src="../three.js-master/examples/js/controls/OrbitControls.js"></script>
 
-<body>
-    <script src="js/three.js" charset="utf-8"></script>
-    <script src="js/OrbitControls.js" charset="utf-8"></script>
-    <script type="text/javascript">
-        // Creating variables at one place
-        var scene, camera, renderer,
-            width, height, light,
-            loader, material, mesh;
+		<script>
+			var container;
+			var camera, scene, renderer;
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
 
-        // methods to call
-        $(document).ready(function () {
-          setTimeout(function () {
-            init();
-            animate();
-          }, 500);
-        });
+			init();
+			animate();
 
-        // defining methods
-        function init() {
-            // Creating scene
-            scene = new THREE.Scene();
-            width = window.innerWidth;
-            height = window.innerHeight;
+			function init() {
+				container = document.createElement('div');
+				document.body.appendChild( container );
 
-            // Creating renderer
-            renderer = new THREE.WebGLRenderer({
-                antialias: true,
-                alpha: true
-            });
-            renderer.setSize(width, height);
-            document.body.appendChild(renderer.domElement);
-            renderer.setClearColor(0x000000, 1);
-            renderer.recieveShadow = true;
-            renderer.autoClear = false;
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera.position.z = 15;
 
-            // Creating camera
-            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
-            camera.position.set(0, 0, 25);
-            scene.add(camera);
+				// scene
+				scene = new THREE.Scene();
 
-            // Adding Controls
-            var controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableZoom = false;
+				var controls = new THREE.OrbitControls(camera, container);
+				controls.enableZoom = false;
 
-            // Adding Ambient light and spotlight
-            amblight = new THREE.AmbientLight(0x777777);
-            scene.add(amblight);
+				var ambient = new THREE.AmbientLight(0xdddddd);
+				camera.add(ambient);
 
-            var spotLight = new THREE.SpotLight(0xffffff);
-            spotLight.position.set(1000, 1000, 1000);
-            scene.add(amblight);
-            camera.add(spotLight);
+				var directionalLight = new THREE.DirectionalLight(0x777777);
+				directionalLight.position.set(0, 0, 1).normalize();
+				scene.add(directionalLight);
+				var directionalLightG = new THREE.DirectionalLight(0x777777);
+				directionalLightG.position.set(0, 0, -1).normalize();
+				scene.add(directionalLightG);
 
-            loader = new THREE.JSONLoader();
-            loader.load("js/json/pad.json", function(geometry) {
-                var texture2 = new THREE.TextureLoader();
-                var url = 'img/ball_texture3.jpg';
-                texture2.load(
-                    url,
-                    function(texture) {
-                        var material = new THREE.MeshPhongMaterial({ color: 0x777777});
-                        sphere = new THREE.Mesh(geometry, material);
-                        scene.add(sphere);
-                    },
-                    function(xhr) {
-                        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-                    },
-                    function(xhr) {
-                        console.log('An error happened');
-                    }
-                );
-            });
-        }
+				var spotLight = new THREE.SpotLight(0xffffff);
+				spotLight.position.set(1000, 1000, 1000);
+				scene.add(ambient);
+				camera.add(spotLight);
 
-        function animate() {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
-        }
-    </script>
-</body>
+				// model
+				var onProgress = function (xhr) {
+					if (xhr.lengthComputable) {
+						var percentComplete = xhr.loaded / xhr.total * 100;
+						//console.log(Math.round(percentComplete, 2) + '% downloaded');
+					}
+				};
 
+				var onError = function (xhr) {};
+
+				//THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
+
+				var loader = new THREE.OBJMTLLoader();
+				loader.load('res/pad/Pad.obj', 'res/pad/Pad.mtl', function (object) {
+					//object.position.y = - 80;
+					scene.add(object);
+				}, onProgress, onError);
+
+				renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+				renderer.setPixelRatio(window.devicePixelRatio );
+				renderer.setSize(window.innerWidth, window.innerHeight);
+				renderer.setClearColor(0x777777, 1);
+				container.appendChild(renderer.domElement);
+
+				//document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				window.addEventListener('resize', onWindowResize, false);
+			}
+
+			function onWindowResize() {
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+			function animate() {
+				requestAnimationFrame( animate );
+				render();
+			}
+
+			function render() {
+				camera.lookAt( scene.position );
+				renderer.render(scene, camera);
+			}
+		</script>
+	</body>
 </html>

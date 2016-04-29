@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Pad</title>
+    <link rel="stylesheet" href="css/main.css" media="screen" charset="utf-8">
+    <script src="js/jquery.min.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <script src="js/three.js" charset="utf-8"></script>
+    <script src="js/OrbitControls.js" charset="utf-8"></script>
+    <script src="../threed/js/MTLLoader.js" charset="utf-8"></script>
+    <script src="../threed/js/OBJLoader.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        var scene, camera, renderer,
+            width, height, light,
+            loader, material, mesh;
+
+        $(document).ready(function () {
+          setTimeout(function () {
+            init();
+            animate();
+          }, 500);
+        });
+
+        function init() {
+          scene = new THREE.Scene();
+          width = window.innerWidth;
+          height = window.innerHeight;
+
+          renderer = new THREE.WebGLRenderer({
+              antialias: true,
+              alpha: true
+          });
+          renderer.setSize(width, height);
+          document.body.appendChild(renderer.domElement);
+          renderer.setClearColor(0x000000, 1);
+          renderer.recieveShadow = true;
+          renderer.autoClear = false;
+
+          camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
+          camera.position.set(0, 0, 15);
+          scene.add(camera);
+
+          var controls = new THREE.OrbitControls(camera, renderer.domElement);
+          controls.enableZoom = false;
+
+          amblight = new THREE.AmbientLight(0x777777);
+          scene.add(amblight);
+
+          var spotLight = new THREE.SpotLight(0xffffff);
+          spotLight.position.set(1000, 1000, 1000);
+          scene.add(amblight);
+          camera.add(spotLight);
+
+          loader = new THREE.JSONLoader();
+          loader.load("js/json/pad2.json", function(geometry) {
+              var texture2 = new THREE.TextureLoader();
+              var url = 'img/ball_texture3.jpg';
+              texture2.load(
+                  url,
+                  function(texture) {
+                      var material = new THREE.MeshPhongMaterial({ color: 0x777777});
+                      sphere = new THREE.Mesh(geometry, material);
+                      // scene.add(sphere);
+                  },
+                  function(xhr) {
+                      console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                  },
+                  function(xhr) {
+                      console.log('An error happened');
+                  }
+              );
+          });
+
+          var canvas = document.createElement("canvas");
+          $("canvas").addClass("mycanvas");
+          canvas.width = 1000;
+          canvas.height = 667;
+          var c = canvas.getContext("2d");
+          var image = new Image();
+          image.src = "";
+
+          var imgsrc = canvas.toDataURL("image/png", 1.0);
+          var textur = new THREE.TextureLoader();
+          var url = 'img/ball_texture3.jpg';
+          loader.load("js/json/pad2.json", function(geometry) {
+            textur.load(
+              url,
+              function(texture) {
+                var material = new THREE.MeshPhongMaterial({ color: 0x000000 });
+                var mysphere = new THREE.Mesh(geometry, material);
+                // mysphere.rotation.x = 0.1;
+                // mysphere.rotation.y = -5;
+                // mysphere.rotation.z = -1;
+                // scene.add(mysphere);
+              },
+              function(xhr) { console.log((xhr.loaded / xhr.total * 100) + '% loaded'); },
+              function(xhr) { console.log('An error happened'); }
+            );
+          });
+        }
+
+        // var onProgress = {};
+        // var onError = {};
+        //
+        // var mtlLoader = new THREE.MTLLoader();
+				// //mtlLoader.setBaseUrl('obj/male02/');
+				// //mtlLoader.setPath('obj/male02/');
+				// mtlLoader.load('Pad.mtl', function(materials) {
+				// 	materials.preload();
+        //
+				// 	var objLoader = new THREE.OBJLoader();
+				// 	objLoader.setMaterials(materials);
+				// 	//objLoader.setPath('obj/male02/');
+				// 	objLoader.load('Pad.obj', function (object) {
+				// 		object.position.y = -95;
+				// 		scene.add(object);
+				// 	}, onProgress, onError);
+				// });
+
+        // var onProgress = function(xhr) {
+        //   if (xhr.lengthComputable) {
+        //     var percentComplete = xhr.loaded / xhr.total * 100;
+        //     console.log(Math.round(percentComplete, 2) + '% downloaded');
+        //   }
+        // };
+        // var onError = function(xhr) {};
+        // var mtlLoader = new THREE.MTLLoader();
+        // mtlLoader.load('Pad.mtl', function(materials) {
+        //   materials.preload();
+        //   var objLoader = new THREE.OBJLoader();
+        //   //objLoader.setMaterials(materials);
+        //   object = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+        //   objLoader.load('Pad.obj', function(object) {
+        //     object.position.y = 0;
+        //     var texture2 = new THREE.TextureLoader();
+        //     var url = 'img/ball_texture3.jpg';
+        //     var texture = THREE.ImageUtils.loadTexture(url);
+        //     object.traverse(function (child) {
+        //       if (child instanceof THREE.Mesh) {
+        //         child.material.map = texture;
+        //       }
+        //     });
+        //     scene.add(object);
+        //   }, onProgress, onError);
+        // });
+
+        // model
+        var onProgress = function(xhr) {
+          if (xhr.lengthComputable) {
+            var percentComplete = xhr.loaded / xhr.total * 100;
+            console.log(Math.round(percentComplete, 2) + '% downloaded');
+          }
+        };
+        var object;
+        var onError = function(xhr) {};
+        var mtlLoader = new THREE.MTLLoader();
+        mtlLoader.load('res/pad/Pad.mtl', function(materials) {
+          materials.preload();
+          var objLoader = new THREE.OBJLoader();
+          objLoader.setMaterials(materials);
+          objLoader.load('res/pad/Pad.obj', function(object) {
+            object.position.y = 0;
+            console.log(object);
+            // var texture2 = new THREE.TextureLoader();
+            var url = '../freehit/img/bat_texture.jpg';
+            // var texture = THREE.ImageUtils.loadTexture(url);
+            object.traverse(function (child) {
+              if (child instanceof THREE.Mesh) {
+                var material = new THREE.MeshPhongMaterial({  });
+                child.material = material;
+                child.geometry.dynamic = true;
+              }
+            });
+            scene.add(object);
+          }, onProgress, onError);
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+
+</html>
