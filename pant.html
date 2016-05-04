@@ -16,7 +16,10 @@
   <!-- <script src="./bower_components/caman/dist/caman.min.js" charset="utf-8"></script> -->
   <script src="js/three.js" charset="utf-8"></script>
   <script src="js/OrbitControls.js" charset="utf-8"></script>
-  <script src="js/OBJLoader.js" charset="utf-8"></script>
+  <script src="js/DDSLoader.js"></script>
+  <script src="js/OBJLoader.js"></script>
+  <script src="js/MTLLoader.js"></script>
+  <script src="js/OBJMTLLoader.js"></script>
   <script type="text/javascript">
 
   var scene, camera, renderer, width, height, light, loader, material, mesh;
@@ -66,31 +69,58 @@
     spotLight.castShadow = true;
     camera.add(spotLight);
 
-    loader = new THREE.JSONLoader();
-    loader.load('js/json/trouser_01.json', function(geometry) {
-      var texture2 = new THREE.TextureLoader();
-      var url = 'img/pant.jpg';
-      texture2.load(
-        url,
-        function(texture) {
-          var material = new THREE.MeshPhongMaterial({
-            map: texture
-          });
-          mesh = new THREE.Mesh(geometry, material);
-          mesh.castShadow = true;
-          mesh.rotation.x = 0;
-          mesh.rotation.y = 0;
-          mesh.rotation.z = 0;
-          scene.add(mesh);
-        },
-        function(xhr) {
-          console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-        },
-        function(xhr) {
-          console.log('An error happened');
-        }
-      );
+    // loader = new THREE.JSONLoader();
+    // loader.load('js/json/trouser_01.json', function(geometry) {
+    //   var texture2 = new THREE.TextureLoader();
+    //   var url = 'img/pant.jpg';
+    //   texture2.load(
+    //     url,
+    //     function(texture) {
+    //       var material = new THREE.MeshPhongMaterial({
+    //         map: texture
+    //       });
+    //       mesh = new THREE.Mesh(geometry, material);
+    //       mesh.castShadow = true;
+    //       mesh.rotation.x = 0;
+    //       mesh.rotation.y = 0;
+    //       mesh.rotation.z = 0;
+    //       scene.add(mesh);
+    //     },
+    //     function(xhr) {
+    //       console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    //     },
+    //     function(xhr) {
+    //       console.log('An error happened');
+    //     }
+    //   );
+    // });
+
+    var texture = new THREE.TextureLoader().load("img/ccc_white.png");
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    var cccgeometry = new THREE.PlaneGeometry(0.5, 0.5, 500);
+    var cccmaterial = new THREE.MeshBasicMaterial({
+      map: texture, transparent: true
     });
+    sphere = new THREE.Mesh(cccgeometry, cccmaterial);
+    sphere.castShadow = true;
+    sphere.position.x = -2.7;
+    sphere.position.y = 4;
+    sphere.position.z = 1.3;
+    sphere.rotation.y = -1;
+    scene.add(sphere);
+
+    var onProgress = function (xhr) {
+      if (xhr.lengthComputable) {
+        var percentComplete = xhr.loaded / xhr.total * 100;
+      }
+    };
+    var onError = function (xhr) {};
+    THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
+    var loader = new THREE.OBJMTLLoader();
+    loader.load('res/pant/pant.obj', 'res/pant/pant.mtl', function (object) {
+      scene.add(object);
+    }, onProgress, onError);
 
     var canvas = document.createElement("canvas");
     $("canvas").addClass("mycanvas");

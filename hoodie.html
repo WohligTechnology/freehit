@@ -65,7 +65,19 @@
           scene.add(amblight);
           camera.add(spotLight);
 
-          var texture = new THREE.TextureLoader().load("img/huddieTM.png");
+  				var onProgress = function (xhr) {
+  					if (xhr.lengthComputable) {
+  						var percentComplete = xhr.loaded / xhr.total * 100;
+  					}
+  				};
+          var onError = function (xhr) {};
+  				THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
+  				var loader = new THREE.OBJMTLLoader();
+  				loader.load('res/hoodie/hoodie.obj', 'res/hoodie/hoodie.mtl', function (object) {
+  					scene.add(object);
+  				}, onProgress, onError);
+
+          var texture = new THREE.TextureLoader().load("img/ccc_green.png");
           texture.wrapS = THREE.RepeatWrapping;
           texture.wrapT = THREE.RepeatWrapping;
           var cccgeometry = new THREE.PlaneGeometry(5, 5, 500);
@@ -78,18 +90,6 @@
           sphere.position.y = 12;
           sphere.position.z = 13.6;
           scene.add(sphere);
-
-  				var onProgress = function (xhr) {
-  					if (xhr.lengthComputable) {
-  						var percentComplete = xhr.loaded / xhr.total * 100;
-  					}
-  				};
-          var onError = function (xhr) {};
-  				THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
-  				var loader = new THREE.OBJMTLLoader();
-  				loader.load('res/hoodie/hoodie.obj', 'res/hoodie/hoodie.mtl', function (object) {
-  					scene.add(object);
-  				}, onProgress, onError);
         }
 
         function animate() {
