@@ -11,9 +11,13 @@
 <body>
     <script src="js/three.js" charset="utf-8"></script>
     <script src="js/OrbitControls.js" charset="utf-8"></script>
+    <script src="js/DDSLoader.js"></script>
+		<script src="js/OBJLoader.js"></script>
+		<script src="js/MTLLoader.js"></script>
+		<script src="js/OBJMTLLoader.js"></script>
     <script type="text/javascript">
         // Creating variables at one place
-        var scene, camera, renderer,
+        var container, scene, camera, renderer,
             width, height, light,
             loader, material, mesh;
 
@@ -22,64 +26,70 @@
           setTimeout(function () {
             init();
             animate();
-          }, 500);
+          }, 50);
         });
-        
+
         // defining methods
         function init() {
-            // Creating scene
-            scene = new THREE.Scene();
-            width = window.innerWidth;
-            height = window.innerHeight;
+          // Creating scene
+          scene = new THREE.Scene();
+          width = window.innerWidth;
+          height = window.innerHeight;
 
-            // Creating renderer
-            renderer = new THREE.WebGLRenderer({
-                antialias: true,
-                alpha: true
-            });
-            renderer.setSize(width, height);
-            document.body.appendChild(renderer.domElement);
-            renderer.setClearColor(0x000000, 1);
-            renderer.recieveShadow = true;
-            renderer.autoClear = false;
+          // Creating renderer
+          renderer = new THREE.WebGLRenderer({
+              antialias: true,
+              alpha: true
+          });
+          renderer.setSize(width, height);
+          document.body.appendChild(renderer.domElement);
+          renderer.setClearColor(0x000000, 1);
+          renderer.recieveShadow = true;
+          renderer.autoClear = false;
 
-            // Creating camera
-            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
-            camera.position.set(0, 0, 100);
-            scene.add(camera);
+          // Creating camera
+          camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
+          camera.position.set(0, 0, 100);
+          scene.add(camera);
 
-            // Adding Controls
-            var controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableZoom = false;
+          // Adding Controls
+          var controls = new THREE.OrbitControls(camera, renderer.domElement);
+          controls.enableZoom = false;
 
-            // Adding Ambient light and spotlight
-            amblight = new THREE.AmbientLight(0x777777);
-            scene.add(amblight);
+          // Adding Ambient light and spotlight
+          amblight = new THREE.AmbientLight(0x777777);
+          scene.add(amblight);
 
-            var spotLight = new THREE.SpotLight(0xffffff);
-            spotLight.position.set(1000, 1000, 1000);
-            scene.add(amblight);
-            camera.add(spotLight);
+          var spotLight = new THREE.SpotLight(0xffffff);
+          spotLight.position.set(1000, 1000, 1000);
+          scene.add(amblight);
+          camera.add(spotLight);
 
-            loader = new THREE.JSONLoader();
-            loader.load("js/json/hoodie.json", function(geometry) {
-                var texture2 = new THREE.TextureLoader();
-                var url = 'img/ball_texture3.jpg';
-                texture2.load(
-                    url,
-                    function(texture) {
-                        var material = new THREE.MeshPhongMaterial({ color: 0x777777});
-                        sphere = new THREE.Mesh(geometry, material);
-                        scene.add(sphere);
-                    },
-                    function(xhr) {
-                        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-                    },
-                    function(xhr) {
-                        console.log('An error happened');
-                    }
-                );
-            });
+          var texture = new THREE.TextureLoader().load("img/huddieTM.png");
+          texture.wrapS = THREE.RepeatWrapping;
+          texture.wrapT = THREE.RepeatWrapping;
+          var cccgeometry = new THREE.PlaneGeometry(5, 5, 500);
+          var cccmaterial = new THREE.MeshBasicMaterial({
+            map: texture, transparent: true
+          });
+          sphere = new THREE.Mesh(cccgeometry, cccmaterial);
+          sphere.castShadow = true;
+          sphere.position.x = 8;
+          sphere.position.y = 12;
+          sphere.position.z = 13.6;
+          scene.add(sphere);
+
+  				var onProgress = function (xhr) {
+  					if (xhr.lengthComputable) {
+  						var percentComplete = xhr.loaded / xhr.total * 100;
+  					}
+  				};
+          var onError = function (xhr) {};
+  				THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
+  				var loader = new THREE.OBJMTLLoader();
+  				loader.load('res/hoodie/hoodie.obj', 'res/hoodie/hoodie.mtl', function (object) {
+  					scene.add(object);
+  				}, onProgress, onError);
         }
 
         function animate() {

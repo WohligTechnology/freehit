@@ -72,8 +72,8 @@ newmtl lambert4
 	Kd 0.8000 0.8000 0.8000
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka net_texture_map1.tif
-	map_Kd net_texture_map1.tif
+	map_Ka net_texture_map1.png
+	map_Kd net_texture_map1.png
 
 newmtl pasted__phong5
 	Ns 10.0000
@@ -98,8 +98,8 @@ newmtl lambert6
 	Kd 0.8000 0.8000 0.8000
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka BACK_texturemap1.tif
-	map_Kd BACK_texturemap1.tif
+	map_Ka BACK_texturemap1.png
+	map_Kd BACK_texturemap1.png
 
 newmtl phong6
 	Ns 43.2193
@@ -124,8 +124,8 @@ newmtl blinn2
 	Kd 0.8000 0.8000 0.8000
 	Ks 0.5000 0.5000 0.5000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka LOCK.tif
-	map_Kd LOCK.tif
+	map_Ka LOCK.png
+	map_Kd LOCK.png
 
 newmtl lambert1
 	Ns 0.0000
@@ -138,8 +138,8 @@ newmtl lambert1
 	Kd 0.8000 0.8000 0.8000
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka net_texture_map.tif
-	map_Kd net_texture_map.tif
+	map_Ka net_texture_map.png
+	map_Kd net_texture_map.png
 
 newmtl pasted__white
 	Ns 43.2193
@@ -176,9 +176,9 @@ newmtl logo1
 	Kd 0.8000 0.8000 0.8000
 	Ks 0.5000 0.5000 0.5000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka pant_logo.tif
-	map_Kd pant_logo.tif
-	map_d pant_logo_transpaterncy_map.tif
+	map_Ka pant_logo.png
+	map_Kd pant_logo.png
+	map_d pant_logo_transpaterncy_map.png
 
 newmtl LOGO
 	Ns 43.2193
@@ -191,5 +191,5 @@ newmtl LOGO
 	Kd 0.8000 0.8000 0.8000
 	Ks 0.5000 0.5000 0.5000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka BACK_texturemap.tif
-	map_Kd BACK_texturemap.tif
+	map_Ka BACK_texturemap.png
+	map_Kd BACK_texturemap.png

@@ -16,11 +16,12 @@
 	<body>
 		<script src="../three.js-master/build/three.min.js"></script>
 		<script src="../three.js-master/examples/js/loaders/DDSLoader.js"></script>
+		<script src="../three.js-master/examples/js/loaders/OBJLoader.js"></script>
 		<script src="../three.js-master/examples/js/loaders/MTLLoader.js"></script>
 		<script src="../three.js-master/examples/js/loaders/OBJMTLLoader.js"></script>
 		<script src="../three.js-master/examples/js/controls/OrbitControls.js"></script>
 
-		<script>
+		<script async>
 			var container;
 			var camera, scene, renderer;
 			var windowHalfX = window.innerWidth / 2;
@@ -70,10 +71,26 @@
 				//THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
 
 				var loader = new THREE.OBJMTLLoader();
-				loader.load('res/pad/Pad.obj', 'res/pad/Pad.mtl', function (object) {
+				loader.load('res/pad/Pad2.obj', 'res/pad/Pad2.mtl', function (object) {
 					//object.position.y = - 80;
 					scene.add(object);
 				}, onProgress, onError);
+
+				// var mtlLoader = new THREE.MTLLoader();
+				// mtlLoader.setBaseUrl('res/pad/');
+				// mtlLoader.load('res/pad/Pad2.mtl', function (materials) {
+				// 	materials.preload();
+				// 	var objLoader = new THREE.OBJLoader();
+				// 	//objLoader.setMaterials(materials);
+				// 	objLoader.load('res/pad/Pad2.obj',  function (object) {
+				// 		// object.traverse(function (child) {
+				// 		// 	if(child instanceof THREE.Mesh) {
+				// 		// 		child.material.map = texture;
+				// 		// 	}
+				// 		// });
+				// 		scene.add(object);
+				// 	}, onProgress, onError);
+				// });
 
 				renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 				renderer.setPixelRatio(window.devicePixelRatio );
