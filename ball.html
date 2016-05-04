@@ -9,12 +9,19 @@
 </head>
 
 <body>
-  <form id="form1" runat="server">
-    <input type='file' id="imgInp" class="file-input" />
-    <img id="blah" src="#" alt="your image" />
-  </form>
-  <div class="mydivv">
-    <img src="img/ccc_yellow.png" alt="" id="ccc" class="cccimage" style="display: none;">
+  <div class="loading-bar" id="loading-bar">
+    <div class="cccimage">
+      <img src="img/ccc.png" class="rotate">
+    </div>
+  </div>
+  <div id="three" style="display: none;">
+    <form id="form1" runat="server">
+      <input type='file' id="imgInp" class="file-input" />
+      <img id="blah" src="#" alt="your image" />
+    </form>
+    <div class="mydivv">
+      <img src="img/ccc_yellow.png" alt="" id="ccc" class="cccimage" style="display: none;">
+    </div>
   </div>
   <script src="js/three.js" charset="utf-8"></script>
   <script src="js/OrbitControls.js" charset="utf-8"></script>
@@ -26,6 +33,7 @@
     var scene, camera, renderer,
       width, height, light,
       loader, material, mesh;
+    var three = document.getElementById("three");
 
     // methods to call
     $(document).ready(function () {
@@ -47,7 +55,7 @@
       // Creating renderer
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       renderer.setSize(width, height);
-      document.body.appendChild(renderer.domElement);
+      three.appendChild(renderer.domElement);
       renderer.setClearColor(0xffffff, 1);
       renderer.recieveShadow = true;
       renderer.autoClear = false;
@@ -98,6 +106,8 @@
           sphere.rotation.y = -5.5;
           sphere.rotation.z = -1;
           scene.add(sphere);
+          document.getElementById("loading-bar").style.display = "none";
+          document.getElementById("three").style.display = "block";
         },
         function(xhr) {
           console.log((xhr.loaded / xhr.total * 100) + '% loaded');

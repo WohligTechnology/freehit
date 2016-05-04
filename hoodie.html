@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>Hoodie</title>
@@ -9,6 +8,12 @@
 </head>
 
 <body>
+  <div class="loading-bar" id="loading-bar">
+    <div class="cccimage">
+      <img src="img/ccc.png" class="rotate">
+    </div>
+  </div>
+  <div id="three" style="display: none;"></div>
     <script src="js/three.js" charset="utf-8"></script>
     <script src="js/OrbitControls.js" charset="utf-8"></script>
     <script src="js/DDSLoader.js"></script>
@@ -20,6 +25,7 @@
         var container, scene, camera, renderer,
             width, height, light,
             loader, material, mesh;
+        var three = document.getElementById("three");
 
         // methods to call
         $(document).ready(function () {
@@ -42,7 +48,7 @@
               alpha: true
           });
           renderer.setSize(width, height);
-          document.body.appendChild(renderer.domElement);
+          three.appendChild(renderer.domElement);
           renderer.setClearColor(0x000000, 1);
           renderer.recieveShadow = true;
           renderer.autoClear = false;
@@ -75,6 +81,8 @@
   				var loader = new THREE.OBJMTLLoader();
   				loader.load('res/hoodie/hoodie.obj', 'res/hoodie/hoodie.mtl', function (object) {
   					scene.add(object);
+            document.getElementById("loading-bar").style.display = "none";
+            document.getElementById("three").style.display = "block";
   				}, onProgress, onError);
 
           var texture = new THREE.TextureLoader().load("img/ccc_green.png");

@@ -8,3 +8,35 @@ html, body, canvas {
   width: 100px;
   height: auto;
 }
+
+.loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 100;
+}
+.cccimage {
+  width: 100px;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 1000;
+}
+.rotate {
+  width: 100%;
+  opacity: 1;
+  animation: rotatelogo 2s linear infinite;
+}
+@keyframes rotatelogo {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

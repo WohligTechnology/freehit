@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <title>Pant</title>
@@ -9,6 +8,12 @@
 </head>
 
 <body>
+  <div class="loading-bar" id="loading-bar">
+    <div class="cccimage">
+      <img src="img/ccc.png" class="rotate">
+    </div>
+  </div>
+  <div id="three" style="display: none;"></div>
   <!-- <form id="form1" runat="server">
     <input type='file' id="imgInp" />
     <img id="blah" src="#" alt="your image" style="display:none;" />
@@ -23,6 +28,7 @@
   <script type="text/javascript">
 
   var scene, camera, renderer, width, height, light, loader, material, mesh;
+  var three = document.getElementById("three");
 
   // methods to call
   $(document).ready(function () {
@@ -39,7 +45,7 @@
 
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
-    document.body.appendChild(renderer.domElement);
+    three.appendChild(renderer.domElement);
     renderer.setClearColor(0x777777, 1);
     renderer.recieveShadow = true;
 
@@ -120,6 +126,8 @@
     var loader = new THREE.OBJMTLLoader();
     loader.load('res/pant/pant.obj', 'res/pant/pant.mtl', function (object) {
       scene.add(object);
+      document.getElementById("loading-bar").style.display = "none";
+      document.getElementById("three").style.display = "block";
     }, onProgress, onError);
 
     var canvas = document.createElement("canvas");
