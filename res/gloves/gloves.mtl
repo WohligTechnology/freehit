@@ -1,0 +1,184 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 31.03.2016 12:44:44
+
+newmtl mi_car_paint_phen_x2
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5000 0.5000 0.5000
+	Kd 0.5000 0.5000 0.5000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl boxing_gloves_glove_4
+	Ns 43.2193
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.4000 0.4000 0.4000
+	Ks 0.5000 0.5000 0.5000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl glove_4
+	Ns 32.5376
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0171 0.0171 0.0171
+	Ke 0.0000 0.0000 0.0000
+
+newmtl glove_5
+	Ns 32.5376
+	Ni 1.5000
+	d 0.5000
+	Tr 0.5000
+	Tf 0.5000 0.5000 0.5000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0171 0.0171 0.0171
+	Ke 0.0000 0.0000 0.0000
+
+newmtl blinn3
+	Ns 3.1699
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.5000 0.5000 0.5000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\design.png
+	map_Kd C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\design.png
+	map_bump C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\design-1.png
+	bump C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\design-1.png
+
+newmtl net
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\MetalsOrnamental MetalsPlateMesh.jpg
+	map_Kd C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\MetalsOrnamental MetalsPlateMesh.jpg
+
+newmtl lambert3
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.7521 0.4057 0.0595
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl lambert4
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\MetalsOrnamentalMetal.jpg
+	map_Kd C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\MetalsOrnamentalMetal.jpg
+
+newmtl lambert7
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\nameglove.jpg
+	map_Kd C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\nameglove.jpg
+
+newmtl lambert8
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl lambert6
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\outUV.jpg
+	map_Kd C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\outUV.jpg
+
+newmtl Default_Material
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5000 0.5000 0.5000
+	Kd 0.5000 0.5000 0.5000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl black
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl sidenew
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.8000 0.8000 0.8000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\side.jpg
+	map_Kd C:\Users\Studio\Downloads\Gloves_04\Alok\visional studio\sport equments\max\25 March 2016\full_pant2\pants\Gloves\side.jpg

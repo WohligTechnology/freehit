@@ -21,7 +21,10 @@
   <!-- <script src="./bower_components/caman/dist/caman.min.js" charset="utf-8"></script> -->
   <script src="js/three.js" charset="utf-8"></script>
   <script src="js/OrbitControls.js" charset="utf-8"></script>
-  <script src="js/OBJLoader.js" charset="utf-8"></script>
+  <script src="js/DDSLoader.js"></script>
+  <script src="js/OBJLoader.js"></script>
+  <script src="js/MTLLoader.js"></script>
+  <script src="js/OBJMTLLoader.js"></script>
   <script type="text/javascript">
 
   var scene, camera, renderer, width, height, light, loader, material, mesh;
@@ -70,32 +73,46 @@
     spotLight.castShadow = true;
     camera.add(spotLight);
 
-    loader = new THREE.JSONLoader();
-    loader.load('js/json/bag2.json', function(geometry) {
-      var texture2 = new THREE.TextureLoader();
-      var url = 'img/bag.jpg';
-      texture2.load(
-        url,
-        function(texture) {
-          var material = new THREE.MeshPhongMaterial({
-            map: texture
-          });
-          mesh = new THREE.Mesh(geometry, material);
-          mesh.castShadow = true;
-          mesh.rotation.x = 0;
-          mesh.rotation.y = 0;
-          mesh.rotation.z = 0;
-          //mesh.material.color.set(0x453897);
-          scene.add(mesh);
-        },
-        function(xhr) {
-          console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-        },
-        function(xhr) {
-          console.log('An error happened');
-        }
-      );
-    });
+    // loader = new THREE.JSONLoader();
+    // loader.load('js/json/bag2.json', function(geometry) {
+    //   var texture2 = new THREE.TextureLoader();
+    //   var url = 'img/bag.jpg';
+    //   texture2.load(
+    //     url,
+    //     function(texture) {
+    //       var material = new THREE.MeshPhongMaterial({
+    //         map: texture
+    //       });
+    //       mesh = new THREE.Mesh(geometry, material);
+    //       mesh.castShadow = true;
+    //       mesh.rotation.x = 0;
+    //       mesh.rotation.y = 0;
+    //       mesh.rotation.z = 0;
+    //       //mesh.material.color.set(0x453897);
+    //       scene.add(mesh);
+    //     },
+    //     function(xhr) {
+    //       console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    //     },
+    //     function(xhr) {
+    //       console.log('An error happened');
+    //     }
+    //   );
+    // });
+
+    var onProgress = function (xhr) {
+      if (xhr.lengthComputable) {
+        var percentComplete = xhr.loaded / xhr.total * 100;
+      }
+    };
+    var onError = function (xhr) {};
+    THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
+    var loader = new THREE.OBJMTLLoader();
+    loader.load('res/bag/bag.obj', 'res/bag/bag.mtl', function (object) {
+      scene.add(object);
+      document.getElementById("loading-bar").style.display = "none";
+      document.getElementById("three").style.display = "block";
+    }, onProgress, onError);
 
     var canvas = document.createElement("canvas");
     $("canvas").addClass("mycanvas");
