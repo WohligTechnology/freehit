@@ -6,6 +6,16 @@
     <title>Full Pant</title>
     <link rel="stylesheet" href="css/main.css" media="screen" charset="utf-8">
     <script src="js/jquery.min.js" charset="utf-8"></script>
+    <style media="screen">
+      .back {
+        width: 100vh;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+      }
+    </style>
 </head>
 
 <body>
@@ -15,6 +25,7 @@
     </div>
   </div>
   <div id="three" style="display: none;"></div>
+  <div class="back"></div>
   <script src="js/three.js" charset="utf-8"></script>
   <script src="js/OrbitControls.js" charset="utf-8"></script>
   <script src="js/DDSLoader.js"></script>
@@ -44,12 +55,12 @@
             height = window.innerHeight;
 
             // Creating renderer
-            renderer = new THREE.WebGLRenderer({});
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, premultipliedAlpha: true });
             renderer.setSize(width, height);
             three.appendChild(renderer.domElement);
-            renderer.setClearColor(0x000000, 1);
+            renderer.setClearColor(0x777777, 1);
             renderer.recieveShadow = true;
-            renderer.autoClear = false;
+            //renderer.autoClear = false;
 
             // Creating camera
             camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
@@ -97,7 +108,7 @@
             var onError = function (xhr) {};
     				THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
     				var loader = new THREE.OBJMTLLoader();
-    				loader.load('res/fullpant/fullpant.obj', 'res/fullpant/fullpant.mtl', function (object) {
+    				loader.load('res/fullpant/new/fullpant3.obj', 'res/fullpant/new/fullpant3.mtl', function (object) {
     					scene.add(object);
               document.getElementById("loading-bar").style.display = "none";
               document.getElementById("three").style.display = "block";
