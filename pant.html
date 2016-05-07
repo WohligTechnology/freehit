@@ -103,7 +103,7 @@
     //   );
     // });
 
-    var texture = new THREE.TextureLoader().load("img/ccc_white.png");
+    var texture = new THREE.TextureLoader().load("img/ccc_black.png");
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
     var cccgeometry = new THREE.PlaneGeometry(0.5, 0.5, 500);
@@ -126,7 +126,7 @@
     var onError = function (xhr) {};
     THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
     var loader = new THREE.OBJMTLLoader();
-    loader.load('res/pant/fullpant.obj', 'res/pant/fullpant.mtl', function (object) {
+    loader.load('res/fullpant/new/fullpant.obj', 'res/fullpant/new/fullpant.mtl', function (object) {
       scene.add(object);
       document.getElementById("loading-bar").style.display = "none";
       document.getElementById("three").style.display = "block";
