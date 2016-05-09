@@ -62,15 +62,15 @@
       camera.updateProjectionMatrix();
     });
 
-    amblight = new THREE.AmbientLight(0xffffff);
+    amblight = new THREE.AmbientLight(0xaaaaaa);
     scene.add(amblight);
 
-    dirlight = new THREE.DirectionalLight(0xffffff, 0.5);
+    dirlight = new THREE.DirectionalLight(0x777777, 0.5);
     dirlight.shadowCameraNear = 1;
     dirlight.shadowCameraFar = 150;
     dirlight.castshadow = true;
 
-    var spotLight = new THREE.SpotLight(0xffffff);
+    var spotLight = new THREE.SpotLight(0x777777);
     spotLight.position.set(1000, 1000, 1000);
     spotLight.castShadow = true;
     camera.add(spotLight);
@@ -126,7 +126,7 @@
     var onError = function (xhr) {};
     THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
     var loader = new THREE.OBJMTLLoader();
-    loader.load('res/fullpant/new/fullpant.obj', 'res/fullpant/new/fullpant.mtl', function (object) {
+    loader.load('res/fullpant/new/fullpant.obj', '', function (object) {
       scene.add(object);
       document.getElementById("loading-bar").style.display = "none";
       document.getElementById("three").style.display = "block";
